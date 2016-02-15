@@ -1,0 +1,22 @@
+{
+  "name": "data-vis",
+  "description": "Data visualisation with python backend",
+  "main": "main.py",
+  "authors": [
+    "rapkin"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/rapkin/data-vis",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.0"
+  }
+}
