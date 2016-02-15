@@ -1,5 +1,13 @@
 ## Installation
 
+### Ubuntu 14.04
+
+* `sudo apt-get install python-dev`
+* `sudo apt-get install postgresql postgresql-contrib`
+* `sudo apt-get install libpq-dev`
+
+### Both
+
 * Install Node.js
 * `npm install -g bower gulp coffee-script`
 * `npm install` - node dependencies
