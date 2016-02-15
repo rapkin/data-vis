@@ -18,7 +18,8 @@
 
 * Install PostgreSQL
 * `createdb data-vis`
-* `createuser postgres`
+* `createuser data-vis -w 'data-vis'`
+
 
 ## Build
 
