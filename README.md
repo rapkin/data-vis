@@ -1,4 +1,3 @@
-# Installation
+## Installation
 
-* `pip install cherrypy`
-* `pip install psycopg2`
+* `pip install -r requirements.txt` - to install all dependencies
