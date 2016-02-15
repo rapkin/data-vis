@@ -13,6 +13,10 @@ app.debug = True
 def send_static(path):
     return send_from_directory('static', path)
 
+@app.route('/bower_components/<path:path>')
+def send_bower_components(path):
+    return send_from_directory('bower_components', path)
+
 @app.route('/')
 def root():
     return send_from_directory('static', 'index.html')
