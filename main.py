@@ -18,5 +18,9 @@ def send_bower_components(path):
 def root():
     return send_from_directory('static', 'index.html')
 
+@app.route('/config/')
+def config():
+    return send_from_directory('.', 'config.json')
+
 if __name__ == "__main__":
     app.run(port=3333, debug=True)
