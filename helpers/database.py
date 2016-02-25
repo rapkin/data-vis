@@ -21,7 +21,9 @@ def create():
     conn.commit()
     print "Created tables successfully"
 
-
-remove()
-create()
-# def import():
+def query(querySql):
+    cursor = conn.cursor()
+    cursor.execute(querySql)
+    conn.commit()
+    result = cursor.fetchall()
+    return result
