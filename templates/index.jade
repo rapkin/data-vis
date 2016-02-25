@@ -3,11 +3,19 @@ html
     head
         meta(charset="UTF-8")
         link(rel="stylesheet", href="/static/main.css")
+        link(rel="stylesheet", href="/bower_components/leaflet/dist/leaflet.css")
         link(rel="stylesheet", href="/bower_components/font-awesome/css/font-awesome.min.css")
         title data-vis
     body
-        .wrapper
-            h1 #[i.fa.fa-bar-chart] Data visualisation
+        .wrapper.main
+            h1.title #[i.fa.fa-bar-chart] Data visualisation
+            h2.sub-title Easy way to visualise your data
+
+        .wrapper: .row
+            #map
+            .side: .wrapper
+                h2.title Map of Ukraine
 
         script(src="/bower_components/jquery/dist/jquery.min.js")
+        script(src="/bower_components/leaflet/dist/leaflet.js")
         script(src="/static/main.js")
