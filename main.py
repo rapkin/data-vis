@@ -14,13 +14,13 @@ def send_static(path):
 def send_bower_components(path):
     return send_from_directory('bower_components', path)
 
+@app.route('/api/<path:path>')
+def api(path):
+    return send_from_directory('api', path + '.json')
+
 @app.route('/')
 def root():
     return send_from_directory('static', 'index.html')
-
-@app.route('/config/')
-def config():
-    return send_from_directory('.', 'config.json')
 
 if __name__ == "__main__":
     app.run(port=3333, debug=True)
