@@ -37,7 +37,7 @@ def import_data():
     insert_data(data)
 
 def insert_data(data):
-    table_queue = ['cities','data_sets']
+    table_queue = ['cities','data_sets', 'data_entries']
 
     cursor = conn.cursor()
     
@@ -67,3 +67,5 @@ def insert_data(data):
                                                                             values = fields_value_str)
         cursor.execute(sql_string, fields_value_flat)
         conn.commit()
+
+import_data()
