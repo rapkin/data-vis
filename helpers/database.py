@@ -32,7 +32,7 @@ def query(querySql):
 def import_data():
     remove()
     create()
-    with open('../__init__.py/import.json') as data_file:
+    with open('../export/import.json') as data_file:
         data = json.load(data_file)
     insert_data(data)
 
@@ -67,5 +67,3 @@ def insert_data(data):
                                                                             values = fields_value_str)
         cursor.execute(sql_string, fields_value_flat)
         conn.commit()
-
-import_data()
