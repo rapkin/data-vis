@@ -1,0 +1,46 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "value": 42,
+            "time": 1458421488,
+            "set_id": 1,
+            "city_id": 1
+        },
+        {
+            "id": 2,
+            "value": 44,
+            "time": 1458421488,
+            "set_id": 1,
+            "city_id": 1
+        },
+        {
+            "id": 3,
+            "value": 43,
+            "time": 1458421488,
+            "set_id": 1,
+            "city_id": 1
+        },
+        {
+            "id": 4,
+            "value": 334,
+            "time": 1458421488,
+            "set_id": 2,
+            "city_id": 1
+        },
+        {
+            "id": 5,
+            "value": 456,
+            "time": 1458421488,
+            "set_id": 2,
+            "city_id": 1
+        },
+        {
+            "id": 6,
+            "value": 666,
+            "time": 1458421488,
+            "set_id": 2,
+            "city_id": 1
+        }
+    ]
+}
