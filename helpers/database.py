@@ -1,4 +1,5 @@
 import psycopg2
+import psycopg2.extras
 import json
 
 conn = psycopg2.connect(
@@ -6,7 +7,8 @@ conn = psycopg2.connect(
     user="data-vis",
     host="127.0.0.1",
     password='data-vis',
-    port="5432")
+    port="5432",
+    cursor_factory=psycopg2.extras.RealDictCursor)
 
 print "Opened database successfully"
 

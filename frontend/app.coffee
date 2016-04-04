@@ -1,4 +1,4 @@
-$.get '/api/config', (config) ->
+$.get '/api/config/', (config) ->
     mapboxAccessToken = config.token
     window.map = L.map('map').setView(config.center, config.zoom)
     L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=#{mapboxAccessToken}", {
@@ -6,7 +6,7 @@ $.get '/api/config', (config) ->
     }).addTo map
 
     renderData = (sets, cities) ->
-        $.get '/api/data_entries', (entries) ->
+        $.get '/api/data_entries/', (entries) ->
             byCities = {}
             for entry in entries.data
                 byCities[entry.city_id] ?= {}
@@ -25,11 +25,12 @@ $.get '/api/config', (config) ->
                     """
                     .addTo map
 
-    $.get '/api/data_sets', (data_sets) ->
+    $.get '/api/data_sets/', (data_sets) ->
         setsByIds = {}
+        console.log typeof data_sets
         setsByIds[set.id] = set for set in data_sets.sets
 
-        $.get '/api/cities', (cities) ->
+        $.get '/api/cities/', (cities) ->
             citiesByIds = {}
             citiesByIds[city.id] = city for city in cities.list
 
