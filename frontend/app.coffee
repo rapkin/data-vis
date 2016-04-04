@@ -1,7 +1,7 @@
 $.get '/api/config/', (config) ->
-    mapboxAccessToken = config.token
+    token = config.token
     window.map = L.map('map').setView(config.center, config.zoom)
-    L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=#{mapboxAccessToken}", {
+    L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=#{token}", {
         id: 'mapbox.light'
     }).addTo map
 
@@ -27,7 +27,6 @@ $.get '/api/config/', (config) ->
 
     $.get '/api/data_sets/', (data_sets) ->
         setsByIds = {}
-        console.log typeof data_sets
         setsByIds[set.id] = set for set in data_sets.sets
 
         $.get '/api/cities/', (cities) ->

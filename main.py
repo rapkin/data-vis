@@ -18,7 +18,7 @@ def send_bower_components(path):
 
 @app.route('/api/config/')
 def config():
-    return send_from_directory('api', 'config.json')
+    return send_from_directory('.', 'config.json')
 
 @app.route('/api/cities/')
 def cities():
@@ -35,7 +35,6 @@ def data_entries():
     filter = request.get_json(silent=True)
     data = models.data_entries.get_by_set_city_time(filter)
     return jsonify({"data":data})
-
 
 @app.route('/')
 def root():

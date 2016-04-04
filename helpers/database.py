@@ -48,8 +48,8 @@ def insert_data(data):
     column_info = cursor.fetchall()
 
     for table_name in table_queue:
-        table_fields = filter(lambda x: x[0] == table_name, column_info)
-        table_fields = map(lambda t_f: t_f[1], table_fields)
+        table_fields = filter(lambda x: x['table_name'] == table_name, column_info)
+        table_fields = map(lambda t_f: t_f['column_name'], table_fields)
 
         fields_str = ", ".join(table_fields)
 
