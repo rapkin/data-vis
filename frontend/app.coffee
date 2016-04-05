@@ -3,6 +3,7 @@ $.get '/api/config/', (config) -> $.get '/api/data_sets/', (data_sets) ->
     mapUrl = "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=#{token}"
     grayscale = L.tileLayer mapUrl, id: 'mapbox.light'
     streets = L.tileLayer mapUrl, id: 'mapbox.streets'
+    satellite = L.tileLayer mapUrl, id: 'mapbox.satellite'
 
     layers = [grayscale]
 
@@ -23,6 +24,7 @@ $.get '/api/config/', (config) -> $.get '/api/data_sets/', (data_sets) ->
     baseLayers =
         Grayscale: grayscale
         Streets: streets
+        Satellite: satellite
 
     L.control.layers(baseLayers, overlays).addTo(map)
 
@@ -54,6 +56,7 @@ $.get '/api/config/', (config) -> $.get '/api/data_sets/', (data_sets) ->
 
                         city.markers[set.id] = L
                             .polygon polygon,
+                                weight: 1
                                 color: color
                                 fillColor: color
                                 fillOpacity: 0.5
@@ -70,4 +73,5 @@ getColor = (id) ->
     colors =
         1: 'red'
         2: 'blue'
+        3: 'green'
     colors[id]
