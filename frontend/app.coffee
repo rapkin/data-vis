@@ -34,6 +34,7 @@ $.get '/api/config/', (config) -> $.get '/api/data_sets/', (data_sets) ->
                 byCities[entry.city_id][entry.set_id] ?= []
                 byCities[entry.city_id][entry.set_id].push entry.value
 
+            columns = Object.keys(sets).length
             for setId, set of sets
                 for cityId, city of cities
                     value = byCities[cityId]?[setId]?[0] or 0
@@ -41,8 +42,18 @@ $.get '/api/config/', (config) -> $.get '/api/data_sets/', (data_sets) ->
 
                     city.markers ?= {}
                     if value > 0
+                        y = parseFloat(city.lat)
+                        x = parseFloat(city.lon) + (parseInt(setId) - columns/2 - 1) * .3
+
+                        polygon = [
+                            [y, x]
+                            [y+value/200, x]
+                            [y+value/200, x+.3]
+                            [y, x+.3]
+                        ]
+
                         city.markers[set.id] = L
-                            .circle [city.lat, city.lon], value * 100,
+                            .polygon polygon,
                                 color: color
                                 fillColor: color
                                 fillOpacity: 0.5
