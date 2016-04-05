@@ -1,9 +1,30 @@
-$.get '/api/config/', (config) ->
+$.get '/api/config/', (config) -> $.get '/api/data_sets/', (data_sets) ->
     token = config.token
-    window.map = L.map('map').setView(config.center, config.zoom)
-    L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=#{token}", {
-        id: 'mapbox.light'
-    }).addTo map
+    mapUrl = "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=#{token}"
+    grayscale = L.tileLayer mapUrl, id: 'mapbox.light'
+    streets = L.tileLayer mapUrl, id: 'mapbox.streets'
+
+    layers = [grayscale]
+
+    overlays = {}
+    setsByIds = {}
+    for set in data_sets.sets
+        set.overlay = new L.LayerGroup()
+        overlays[set.name] = set.overlay
+        setsByIds[set.id] = set
+        layers.push set.overlay
+
+    map = L.map 'map',
+        center: config.center
+        zoom: config.zoom
+        layers: layers
+    map.scrollWheelZoom.disable()
+
+    baseLayers =
+        Grayscale: grayscale
+        Streets: streets
+
+    L.control.layers(baseLayers, overlays).addTo(map)
 
     renderData = (sets, cities) ->
         $.get '/api/data_entries/', (entries) ->
@@ -13,24 +34,29 @@ $.get '/api/config/', (config) ->
                 byCities[entry.city_id][entry.set_id] ?= []
                 byCities[entry.city_id][entry.set_id].push entry.value
 
-            for cityId, city of cities
-                dataLine = (for setId, data of byCities[city.id]
-                    "#{sets[setId].name}: [" + data.join(', ') + ']'
-                ).join('<br>')
-                city.marker = L
-                    .marker [city.lat, city.lon]
-                    .bindPopup """
-                        #{city.name} [#{city.lat}, #{city.lon}]<br>
-                        #{dataLine}
-                    """
-                    .addTo map
+            for setId, set of sets
+                for cityId, city of cities
+                    value = byCities[cityId]?[setId]?[0] or 0
+                    color = getColor(setId)
 
-    $.get '/api/data_sets/', (data_sets) ->
-        setsByIds = {}
-        setsByIds[set.id] = set for set in data_sets.sets
+                    city.markers ?= {}
+                    if value > 0
+                        city.markers[set.id] = L
+                            .circle [city.lat, city.lon], value * 100,
+                                color: color
+                                fillColor: color
+                                fillOpacity: 0.5
+                            .bindPopup "#{city.name}<br>#{set.name}: #{value}"
+                            .addTo set.overlay
 
-        $.get '/api/cities/', (cities) ->
-            citiesByIds = {}
-            citiesByIds[city.id] = city for city in cities.list
+    $.get '/api/cities/', (cities) ->
+        citiesByIds = {}
+        citiesByIds[city.id] = city for city in cities.list
 
-            renderData(setsByIds, citiesByIds)
+        renderData(setsByIds, citiesByIds)
+
+getColor = (id) ->
+    colors =
+        1: 'red'
+        2: 'blue'
+    colors[id]
