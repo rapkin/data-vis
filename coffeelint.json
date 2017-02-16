@@ -5,10 +5,6 @@
     "spacing_after_comma": {
         "level": "warn"
     },
-    "line_endings": {
-        "level": "error",
-        "value": "unix"
-    },
     "no_empty_param_list": {
         "level": "error"
     },
