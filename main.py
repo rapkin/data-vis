@@ -5,8 +5,7 @@ import os
 import json
 import models
 
-PATH = os.path.abspath(os.path.dirname(__file__))
-app = Flask(__name__, static_url_path=PATH)
+app = Flask(__name__)
 
 @app.route('/static/<path:path>')
 def send_static(path):
@@ -18,7 +17,9 @@ def send_bower_components(path):
 
 @app.route('/api/config/')
 def config():
-    return send_from_directory('.', 'config.json')
+    with open('config.json') as data_file:
+        data = json.load(data_file)
+        return jsonify(data)
 
 @app.route('/api/cities/')
 def cities():
