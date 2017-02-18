@@ -6,9 +6,9 @@ root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 conn = psycopg2.connect(
     database="data-vis",
-    user="data-vis",
+    user="postgres",
     host="127.0.0.1",
-    password='data-vis',
+    password='root',
     port="5432",
     cursor_factory=psycopg2.extras.RealDictCursor)
 
@@ -16,13 +16,13 @@ print("Opened database successfully")
 
 def remove():
     cursor = conn.cursor()
-    cursor.execute(open(root+"/sql/drop_tables.sql", "r").read())
+    cursor.execute(open(root+"helpers/sql/drop_tables.sql", "r").read())
     conn.commit()
     print("Removed tables successfully")
 
 def create():
     cursor = conn.cursor()
-    cursor.execute(open(root+"/sql/create_tables.sql", "r").read())
+    cursor.execute(open(root+"helpers/sql/create_tables.sql", "r").read())
     conn.commit()
     print("Created tables successfully")
 
@@ -36,7 +36,7 @@ def query(querySql):
 def import_data():
     remove()
     create()
-    with open(root+'/export/import.json', encoding='utf-8') as data_file:
+    with open(root+'helpers/export/import.json', encoding='utf-8') as data_file:
         data = json.load(data_file)
     insert_data(data)
 
@@ -66,3 +66,8 @@ def insert_data(data):
         cursor = conn.cursor()
         cursor.execute(sql_string, fields_value_flat)
         conn.commit()
+
+if __name__ == "__main__":
+    remove()
+    create()
+    import_data()

@@ -1,9 +1,6 @@
-from helpers import database
+from helpers import database as db
 
 def get_all():
     sql_query = 'SELECT id, name, lat, lon FROM cities'
 
-    cursor = database.conn.cursor()
-    cursor.execute(sql_query)
-    database.conn.commit()
-    return cursor.fetchall()
+    return db.query(sql_query)
