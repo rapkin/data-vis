@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify, request
+from . import cities_controler
 import json
 import models
 
@@ -10,10 +11,13 @@ def config():
         data = json.load(data_file)
         return jsonify(data)
 
-@api.route('/api/cities/')
-def cities():
-    data = models.cities.get_all()
-    return jsonify({"list":data})
+
+cities_api = cities_controler.CitiesAPI.as_view("cities_api")
+api.add_url_rule('/api/cities/',
+                    view_func=cities_api,
+                    methods=['GET', 'POST', 'PUT'])
+
+
 
 @api.route('/api/data_sets/')
 def data_sets():
