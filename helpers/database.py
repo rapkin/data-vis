@@ -16,13 +16,13 @@ print("Opened database successfully")
 
 def remove():
     cursor = conn.cursor()
-    cursor.execute(open(root+"helpers/sql/drop_tables.sql", "r").read())
+    cursor.execute(open(root+"/helpers/sql/drop_tables.sql", "r").read())
     conn.commit()
     print("Removed tables successfully")
 
 def create():
     cursor = conn.cursor()
-    cursor.execute(open(root+"helpers/sql/create_tables.sql", "r").read())
+    cursor.execute(open(root+"/helpers/sql/create_tables.sql", "r").read())
     conn.commit()
     print("Created tables successfully")
 
@@ -34,9 +34,7 @@ def query(querySql):
     return result
 
 def import_data():
-    remove()
-    create()
-    with open(root+'helpers/export/import.json', encoding='utf-8') as data_file:
+    with open(root+'/helpers/export/import.json', encoding='utf-8') as data_file:
         data = json.load(data_file)
     insert_data(data)
 
