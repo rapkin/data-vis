@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
 from flask import Flask, send_from_directory, request, Response, jsonify
-from api.controler import api
+from api.index import api
 import json
 import models
 
 app = Flask(__name__)
 
+#/api/ routes
 app.register_blueprint(api)
 
 
