@@ -1,8 +1,8 @@
-from helpers import database
+from helpers import database as db
 
 def get_by_set_city_time(filter):
     sql_query = 'SELECT * FROM data_entries'
- 
+
     if filter is not None:
         filter_keys = filter.keys()
         sql_filter_list = []
@@ -18,9 +18,6 @@ def get_by_set_city_time(filter):
 
         if sql_filter_list:
             sql_query += ' WHERE '
-            sql_query += ' AND '.join(sql_filter_list)   
+            sql_query += ' AND '.join(sql_filter_list)
 
-    cursor = database.conn.cursor()
-    cursor.execute(sql_query)
-    database.conn.commit()
-    return cursor.fetchall()
+    return db.query(sql_query)
