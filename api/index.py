@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, config
+from flask import Blueprint, jsonify, request, current_app
 from . import cities
 import json
 import models
@@ -7,7 +7,7 @@ api = Blueprint('api', __name__)
 
 @api.route('/api/config/')
 def send_config():
-    cfg = config["MAPBOX"]
+    cfg = current_app.config["MAPBOX"]
     return jsonify(cfg)
 
 

@@ -2,31 +2,65 @@ import psycopg2
 import psycopg2.extras
 import json
 import os
+from flask import g, current_app
 root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
-conn = psycopg2.connect(
-    database="data-vis",
-    user="postgres",
-    host="127.0.0.1",
-    password='root',
-    port="5432",
-    cursor_factory=psycopg2.extras.RealDictCursor)
+# conn = psycopg2.connect(
+#     database="data-vis",
+#     user="postgres",
+#     host="127.0.0.1",
+#     password='root',
+#     port="5432",
+#     cursor_factory=psycopg2.extras.RealDictCursor)
 
-print("Opened database successfully")
+#print("Opened database successfully")
+
+def get_db(app):
+
+    if not hasattr(g, 'db_conn'):
+        db_cfg = app.config["DATABASE"]
+        g.db_conn = psycopg2.connect(
+                database=db_cfg["database"],
+                user=db_cfg["user"],
+                host=db_cfg["host"],
+                password=db_cfg["password"],
+                port=db_cfg["port"])
+    return g.db_conn
+
+    # db = getattr(g, 'db_conn', None)
+    # if db is None:
+    #     db_cfg = app.config["DATABASE"]
+    #     db = g.db_conn = psycopg2.connect(
+    #             database=db_cfg["database"],
+    #             user=db_cfg["user"],
+    #             host=db_cfg["host"],
+    #             password=db_cfg["password"],
+    #             port=db_cfg["port"])
+    #     print("Opened new db conn")
+    # else:
+    #     db = g.db_conn
+    #     print("Using existing db conn")
+
+    # return db
+
+
 
 def remove():
+    conn = get_db(current_app)
     cursor = conn.cursor()
     cursor.execute(open(root+"/helpers/sql/drop_tables.sql", "r").read())
     conn.commit()
     print("Removed tables successfully")
 
 def create():
+    conn = get_db(current_app)
     cursor = conn.cursor()
     cursor.execute(open(root+"/helpers/sql/create_tables.sql", "r").read())
     conn.commit()
     print("Created tables successfully")
 
 def query(querySql):
+    conn = get_db(current_app)
     cursor = conn.cursor()
     cursor.execute(querySql)
     conn.commit()
@@ -39,6 +73,7 @@ def import_data():
     insert_data(data)
 
 def insert_data(data):
+    conn = get_db(current_app)
     table_queue = ['cities','data_sets', 'data_entries']
 
     for table_name in table_queue:

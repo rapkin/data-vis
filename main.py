@@ -2,6 +2,7 @@
 
 from flask import Flask, send_from_directory, request, Response, jsonify
 from api.index import api
+from helpers.database import get_db
 import json
 import models
 
@@ -26,7 +27,11 @@ def root():
     return send_from_directory('static', 'index.html')
 
 if __name__ == "__main__":
-    app.config.from_object("configs.dev_cfg.DevelopmentConfig")
     
-    app.run(port=app.config["APP_PORT"])
+    #print(dir(app.app_context))
+    with app.app_context():
+        app.config.from_object("configs.dev_cfg.DevelopmentConfig")
+        get_db(app)
+    
+        app.run(port=app.config["PORT"])
 
