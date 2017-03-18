@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, config
 from . import cities
 import json
 import models
@@ -6,10 +6,10 @@ import models
 api = Blueprint('api', __name__)
 
 @api.route('/api/config/')
-def config():
-    with open('config.json') as data_file:
-        data = json.load(data_file)
-        return jsonify(data)
+def send_config():
+    cfg = config["MAPBOX"]
+    return jsonify(cfg)
+
 
 
 cities_api = cities.CitiesAPI.as_view("cities_api")

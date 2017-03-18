@@ -26,4 +26,7 @@ def root():
     return send_from_directory('static', 'index.html')
 
 if __name__ == "__main__":
-    app.run(port=3333, debug=True)
+    app.config.from_object("configs.dev_cfg.DevelopmentConfig")
+    
+    app.run(port=3333)
+
