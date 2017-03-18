@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import Flask, send_from_directory, request, Response, jsonify
+from flask import Flask, send_from_directory, request, Response, jsonify, g
 from api.index import api
 from helpers.database import get_db
 import json
@@ -26,12 +26,24 @@ def send_bower_components(path):
 def root():
     return send_from_directory('static', 'index.html')
 
+# @app.teardown_appcontext
+# def teardown_db(exception):
+#     db = getattr(g, 'db_conn', None)
+#     if db is not None:
+#         db.close()
+
 if __name__ == "__main__":
+    app.config.from_object("configs.dev_cfg.DevelopmentConfig")
     
-    #print(dir(app.app_context))
-    with app.app_context():
-        app.config.from_object("configs.dev_cfg.DevelopmentConfig")
-        get_db(app)
+    # To init database uncoment code
+    # from helpers.database import init_db
+    # with app.app_context():
+    #     init_db()
     
-        app.run(port=app.config["PORT"])
+    with app.app_context():        
+        app.app_ctx_globals_class.db_conn = get_db()
+    
+    app.run(port=app.config["PORT"])
+        
+
 

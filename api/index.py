@@ -3,7 +3,7 @@ from . import cities
 import json
 import models
 
-api = Blueprint('api', __name__)
+api = Blueprint('api', "api")
 
 @api.route('/api/config/')
 def send_config():
