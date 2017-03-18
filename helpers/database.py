@@ -24,7 +24,8 @@ def get_db(app):
                 user=db_cfg["user"],
                 host=db_cfg["host"],
                 password=db_cfg["password"],
-                port=db_cfg["port"])
+                port=db_cfg["port"],
+                cursor_factory=psycopg2.extras.RealDictCursor)
     return g.db_conn
 
     # db = getattr(g, 'db_conn', None)
