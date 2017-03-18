@@ -7,6 +7,7 @@ class DevelopmentConfig(Config):
     USER = "postgres"
     HOST = "127.0.0.1"
     PASSWORD = 'root'
-    PORT = "5432"
+    DB_PORT = "5432"
+    APP_PORT = 3333
 
 
