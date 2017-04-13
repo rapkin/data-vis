@@ -21,7 +21,7 @@ __Response:__
 }
 ```
 
-### GET /cities/
+### GET api/cities/
 Віддає список всіх міст
 
 __Response:__
@@ -40,7 +40,7 @@ __Response:__
 }
 ```
 
-### GET /data_sets/
+### GET api/data_sets/
 Віддає список всіх наборів данних
 
 __Response:__
@@ -57,7 +57,8 @@ __Response:__
 }
 ```
 
-### GET /data_entries/?sets=34,2,23&cities=32,45&after=43244324&before=323243
+
+### POST api/data_entries/
 Віддає всі данні по наборах данних
 (Передбачити пагінацію)
 

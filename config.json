@@ -1,5 +1,21 @@
-{
-    "token": "pk.eyJ1IjoicmFwa2luIiwiYSI6ImNpbDJqMjdtbjAwYnN3N20wcm5ocjZwNzQifQ.1e1M_mLQuD0xyi7ZrP0DCQ",
-    "center": [48.8, 31.2],
-    "zoom": 6
-}
+ {
+ 	"Flask": {
+ 		"DEBUG": 1,	    
+	    "PORT": 3333 
+ 	},
+ 	"Database": {
+ 		"database": "data-vis", 
+	    "user": "postgres",
+	    "host": "127.0.0.1", 
+	    "password": "root",
+	    "port": "5432"
+ 	},
+ 	"Mapbox": {
+ 		"token": "pk.eyJ1IjoicmFwa2luIiwiYSI6ImNpbDJqMjdtbjAwYnN3N20wcm5ocjZwNzQifQ.1e1M_mLQuD0xyi7ZrP0DCQ", 
+        "center": [48.8, 31.2], 
+        "zoom": 6 
+ 	}
+ }
+
+ 	
+
