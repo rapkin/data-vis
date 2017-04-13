@@ -3,7 +3,7 @@
  		"DEBUG": 1,	    
 	    "PORT": 3333 
  	},
- 	"DATABASE": {
+ 	"Database": {
  		"database": "data-vis", 
 	    "user": "postgres",
 	    "host": "127.0.0.1", 

@@ -43,7 +43,7 @@ if __name__ == "__main__":
     
     with app.app_context():
         load_cfg("config.json")        
-        app.app_ctx_globals_class.db_conn = get_db()
-    
+        app.app_ctx_globals_class.db_conn = get_db()   
+
     app.run(port=app.config["PORT"])
         
