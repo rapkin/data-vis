@@ -1,9 +1,9 @@
 import psycopg2
 import psycopg2.extras
 import json
-import os
+from os import path
 from flask import current_app, g
-root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+root = path.dirname(path.dirname(path.realpath(__file__)))
 
 # conn = psycopg2.connect(
 #     database="data-vis",

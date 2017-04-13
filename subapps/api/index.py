@@ -1,18 +1,17 @@
-from flask import Blueprint, jsonify, request
-from . import cities_controler
+from flask import Blueprint, jsonify, request, current_app
+from subapps.api.controller import cities
 import json
-import models
+import subapps.api.models as models
 
-api = Blueprint('api', __name__)
+api = Blueprint('api', "api")
 
 @api.route('/api/config/')
-def config():
-    with open('config.json') as data_file:
-        data = json.load(data_file)
-        return jsonify(data)
+def send_config():
+    cfg = current_app.config["MAPBOX"]
+    return jsonify(cfg)
 
 
-cities_api = cities_controler.CitiesAPI.as_view("cities_api")
+cities_api = cities.CitiesAPI.as_view("cities_api")
 api.add_url_rule('/api/cities/',
                     view_func=cities_api,
                     methods=['GET', 'POST', 'PUT'])
