@@ -2,31 +2,55 @@ import psycopg2
 import psycopg2.extras
 import json
 import os
+from flask import current_app, g
 root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
-conn = psycopg2.connect(
-    database="data-vis",
-    user="postgres",
-    host="127.0.0.1",
-    password='root',
-    port="5432",
-    cursor_factory=psycopg2.extras.RealDictCursor)
+# conn = psycopg2.connect(
+#     database="data-vis",
+#     user="postgres",
+#     host="127.0.0.1",
+#     password='root',
+#     port="5432",
+#     cursor_factory=psycopg2.extras.RealDictCursor)
 
-print("Opened database successfully")
+#print("Opened database successfully")
+
+def get_db():
+    db = getattr(g, 'db_conn', None)
+    if db is None:
+        db_cfg = current_app.config["DATABASE"]
+        db = g.db_conn = psycopg2.connect(
+                database=db_cfg["database"],
+                user=db_cfg["user"],
+                host=db_cfg["host"],
+                password=db_cfg["password"],
+                port=db_cfg["port"],
+                cursor_factory=psycopg2.extras.RealDictCursor)
+    
+    return db
+
+def init_db():
+    remove()
+    create()
+    import_data()
+
 
 def remove():
+    conn = get_db()
     cursor = conn.cursor()
     cursor.execute(open(root+"/helpers/sql/drop_tables.sql", "r").read())
     conn.commit()
     print("Removed tables successfully")
 
 def create():
+    conn = get_db()
     cursor = conn.cursor()
     cursor.execute(open(root+"/helpers/sql/create_tables.sql", "r").read())
     conn.commit()
     print("Created tables successfully")
 
 def query(querySql):
+    conn = get_db()
     cursor = conn.cursor()
     cursor.execute(querySql)
     conn.commit()
@@ -39,6 +63,7 @@ def import_data():
     insert_data(data)
 
 def insert_data(data):
+    conn = get_db()
     table_queue = ['cities','data_sets', 'data_entries']
 
     for table_name in table_queue:
@@ -65,7 +90,5 @@ def insert_data(data):
         cursor.execute(sql_string, fields_value_flat)
         conn.commit()
 
-if __name__ == "__main__":
-    remove()
-    create()
-    import_data()
+
+    
