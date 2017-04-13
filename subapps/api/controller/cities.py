@@ -1,6 +1,6 @@
 from flask.views import MethodView
 from flask import jsonify, request
-from models import cities
+from subapps.api.models import cities
 
 
 class CitiesAPI(MethodView):

@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 from flask import Flask, send_from_directory, request, Response, jsonify, g
-from api.index import api
+from subapps.api.index import api
 from helpers.database import get_db
 from helpers.config import load_cfg
 import json
-import models
 
 app = Flask(__name__)
 
