@@ -29,4 +29,3 @@ if __name__ == "__main__":
     app.config.from_object("configs.dev_cfg.DevelopmentConfig")
     
     app.run(port=app.config["APP_PORT"])
-

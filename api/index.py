@@ -11,7 +11,6 @@ def send_config():
     return jsonify(cfg)
 
 
-
 cities_api = cities.CitiesAPI.as_view("cities_api")
 api.add_url_rule('/api/cities/',
                     view_func=cities_api,
