@@ -3,6 +3,7 @@
 from flask import Flask, send_from_directory, request, Response, jsonify, g
 from api.index import api
 from helpers.database import get_db
+from helpers.config import load_cfg
 import json
 import models
 
@@ -33,14 +34,15 @@ def root():
 #         db.close()
 
 if __name__ == "__main__":
-    app.config.from_object("configs.dev_cfg.DevelopmentConfig")
+    #app.config.from_object("configs.dev_cfg.DevelopmentConfig")
     
     # To init database uncoment code
     # from helpers.database import init_db
     # with app.app_context():
     #     init_db()
     
-    with app.app_context():        
+    with app.app_context():
+        load_cfg("config.json")        
         app.app_ctx_globals_class.db_conn = get_db()
     
     app.run(port=app.config["PORT"])
