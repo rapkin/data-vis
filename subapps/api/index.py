@@ -17,11 +17,11 @@ api.add_url_rule('/api/cities/',
                     methods=['GET', 'POST', 'PUT'])
 
 
-
 @api.route('/api/data_sets/')
 def data_sets():
     data = models.data_sets.get_all()
     return jsonify({"sets":data})
+
 
 @api.route('/api/data_entries/', methods=['GET', 'POST'])
 def data_entries():

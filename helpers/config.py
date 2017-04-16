@@ -9,5 +9,3 @@ def load_cfg(path):
     current_app.config["DATABASE"] = data["Database"]
     for cfg_name in data["Flask"]:
         current_app.config[cfg_name] = data["Flask"][cfg_name]
-
-    

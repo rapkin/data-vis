@@ -1,3 +1,0 @@
-DROP TABLE IF EXISTS data_entries;
-DROP TABLE IF EXISTS data_sets;
-DROP TABLE IF EXISTS cities;

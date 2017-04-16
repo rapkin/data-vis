@@ -24,14 +24,15 @@ class CitiesAPI(MethodView):
         return jsonify({"list": data})
 
 
-
-#    def post(self):
-# update
-
+    # def post(self):
+    #     # update
+    #     pass
+    #
     #
     # def delete(self):
     #     #del city
     #     pass
+    #
     #
     # def put(self):
     #     #add city
