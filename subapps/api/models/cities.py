@@ -4,12 +4,14 @@ sql_select_query = 'SELECT id, name, lat, lon FROM cities'
 sql_update_query = 'UPDATE cities'
 
 def get_all():
-    return db.query(sql_select_query).fetchall()
+    res = db.query(sql_select_query)
+    return [res.statusmessage, res.fetchall()] 
 
 
 def get_cities_by_id(cities_id):
     filter_str = ' WHERE id IN ({})'.format(",".join(str(item) for item in cities_id))
-    return db.query(sql_select_query + filter_str).fetchall()
+    res = db.query(sql_select_query + filter_str)     
+    return [res.statusmessage, res.fetchall()] 
 
 
 def update_by_filter(data):

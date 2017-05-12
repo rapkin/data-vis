@@ -16,7 +16,8 @@ class CitiesAPI(MethodView):
         else:
             data = cities.get_all()
 
-        return jsonify({"list": data})
+        status, values = data
+        return jsonify({"list": values, "message": status})
 
 
 
