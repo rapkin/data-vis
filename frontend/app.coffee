@@ -32,7 +32,7 @@ $.get '/api/config/', (config) -> $.get '/api/data_sets/', (data_sets) ->
     renderData = (sets, cities) ->
         $.get '/api/data_entries/', (entries) ->
             byCities = {}
-            for entry in entries.data
+            for entry in entries.list
                 byCities[entry.city_id] ?= {}
                 byCities[entry.city_id][entry.set_id] ?= []
                 byCities[entry.city_id][entry.set_id].push entry.value

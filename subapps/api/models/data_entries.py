@@ -1,5 +1,12 @@
 from helpers import database as db
 
+sql_select_query = 'SELECT * FROM data_entries'
+def get_all():
+    res = db.query(sql_select_query)
+    return [res.statusmessage, res.fetchall()] 
+
+
+
 def get_by_set_city_time(filter):
     sql_query = 'SELECT * FROM data_entries'
 
