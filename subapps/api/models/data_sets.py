@@ -71,14 +71,3 @@ def insert_many(data):
     res.close()
 
     return [res.statusmessage]
-
-# data = [{
-#     "filter_name": "id",
-#     "filter_value": "6",
-#     "values":{"key1": "value1", "key2": "value2", "key3": "value3"}
-#     }, {
-#     "filter_name": "name",
-#     "filter_value": "10",
-#     "values":{"key1": "value1", "key2": "value2", "key3": "value3"}
-#     }]
-#
