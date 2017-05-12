@@ -5,16 +5,6 @@ from os import path
 from flask import current_app, g
 root = path.dirname(path.dirname(path.realpath(__file__)))
 
-# conn = psycopg2.connect(
-#     database="data-vis",
-#     user="postgres",
-#     host="127.0.0.1",
-#     password='root',
-#     port="5432",
-#     cursor_factory=psycopg2.extras.RealDictCursor)
-
-#print("Opened database successfully")
-
 def get_db():
     db = getattr(g, 'db_conn', None)
     if db is None:
@@ -26,8 +16,9 @@ def get_db():
                 password=db_cfg["password"],
                 port=db_cfg["port"],
                 cursor_factory=psycopg2.extras.RealDictCursor)
-    
+
     return db
+
 
 def init_db():
     remove()
@@ -42,12 +33,14 @@ def remove():
     conn.commit()
     print("Removed tables successfully")
 
+
 def create():
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute(open(root+"/helpers/sql/create_tables.sql", "r").read())
     conn.commit()
     print("Created tables successfully")
+
 
 def query(querySql):
     conn = get_db()
@@ -56,10 +49,12 @@ def query(querySql):
     conn.commit()
     return cursor
 
+
 def import_data():
     with open(root+'/helpers/export/import.json', encoding='utf-8') as data_file:
         data = json.load(data_file)
     insert_data(data)
+
 
 def insert_data(data):
     conn = get_db()
@@ -88,6 +83,3 @@ def insert_data(data):
         cursor = conn.cursor()
         cursor.execute(sql_string, fields_value_flat)
         conn.commit()
-
-
-    

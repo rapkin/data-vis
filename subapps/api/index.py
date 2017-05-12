@@ -23,9 +23,7 @@ api.add_url_rule('/api/data_sets/',
                     view_func=data_sets_api,
                     methods=['GET', 'POST', 'PUT', 'DELETE'])
 
-
 data_entries_api = data_entries.DataEntriesAPI.as_view("data_entries_api")
 api.add_url_rule('/api/data_entries/',
                     view_func=data_entries_api,
                     methods=['GET', 'POST', 'PUT', 'DELETE'])
-
