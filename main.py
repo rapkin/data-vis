@@ -26,12 +26,6 @@ def send_bower_components(path):
 def root():
     return send_from_directory('static', 'index.html')
 
-# @app.teardown_appcontext
-# def teardown_db(exception):
-#     db = getattr(g, 'db_conn', None)
-#     if db is not None:
-#         db.close()
-
 
 if __name__ == "__main__":
     #app.config.from_object("configs.dev_cfg.DevelopmentConfig")

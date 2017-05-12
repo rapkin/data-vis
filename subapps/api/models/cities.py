@@ -83,7 +83,3 @@ def insert_many(data):
 #     "values":{"key1": "value1", "key2": "value2", "key3": "value3"}
 #     }]
 #
-# update_by_id(data)
-# def put_cities_by_id(cities_id):
-#     sql_update_query = 'UPDATE cities ....'
-#

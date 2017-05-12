@@ -1,9 +1,13 @@
 from flask import Blueprint, jsonify, request, current_app
 from subapps.api.controller import cities
-import json
-import subapps.api.models as models
+from subapps.api.controller import data_sets
+#import subapps.api.controller as contrl
+from subapps.api.models import data_sets as m_data_sets
+from subapps.api.models import cities as m_cities
+from subapps.api.models import data_entries as m_data_entries
 
 api = Blueprint('api', "api")
+#print(dir(contrl))
 
 @api.route('/api/config/')
 def send_config():
@@ -17,14 +21,21 @@ api.add_url_rule('/api/cities/',
                     methods=['GET', 'POST', 'PUT', 'DELETE'])
 
 
+# data_sets_api = data_sets.DataSetsAPI.as_view("data_sets_api")
+# api.add_url_rule('/api/data_sets/',
+#                     view_func=data_sets_api,
+#                     methods=['GET', 'POST', 'PUT', 'DELETE'])
+
+
 
 @api.route('/api/data_sets/')
 def data_sets():
-    data = models.data_sets.get_all()
-    return jsonify({"sets":data})
+    data = m_data_sets.get_all()
+    status, values = data
+    return jsonify({"list": values, "message": status})
 
 @api.route('/api/data_entries/', methods=['GET', 'POST'])
 def data_entries():
     filter = request.get_json(silent=True)
-    data = models.data_entries.get_by_set_city_time(filter)
+    data = m_data_entries.get_by_set_city_time(filter)
     return jsonify({"data":data})

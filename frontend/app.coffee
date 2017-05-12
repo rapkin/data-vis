@@ -9,11 +9,12 @@ $.get '/api/config/', (config) -> $.get '/api/data_sets/', (data_sets) ->
 
     overlays = {}
     setsByIds = {}
-    for set in data_sets.sets
+    for set in data_sets.list
         set.overlay = new L.LayerGroup()
         overlays[set.name] = set.overlay
         setsByIds[set.id] = set
         layers.push set.overlay
+
 
     map = L.map 'map',
         center: config.center
