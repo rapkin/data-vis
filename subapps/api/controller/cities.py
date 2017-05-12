@@ -44,11 +44,25 @@ class CitiesAPI(MethodView):
         """
         json = request.get_json()
 
-        data = cities.delete_by_id(json)
+        ids = [str(id) for id in json["ids"]]
+
+        data = cities.delete_by_id(ids)
         status = data[0]
         return jsonify({"message": status})
         
-    #
-    # def put(self):
-    #     #add city
-    #     pass
+    
+    def put(self):
+        """
+        [
+            {
+                "lat": 123.54,
+                "lon": 31.42,
+                "name": "some point"
+            },
+        ]
+        """
+        json = request.get_json()
+
+        data = cities.insert_many(json)
+        status = data[0]
+        return jsonify({"message": status})
