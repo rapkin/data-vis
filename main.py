@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-from flask import Flask, send_from_directory, request, Response, jsonify, g
+from flask import Flask, send_from_directory
 from subapps.api.index import api
 from helpers.database import get_db
 from helpers.config import load_cfg
-import json
+
 
 app = Flask(__name__)
 
@@ -32,17 +32,18 @@ def root():
 #     if db is not None:
 #         db.close()
 
+
 if __name__ == "__main__":
     #app.config.from_object("configs.dev_cfg.DevelopmentConfig")
-    
+
     # To init database uncoment code
     # from helpers.database import init_db
     # with app.app_context():
+    #     load_cfg("config.json")
     #     init_db()
-    
+
     with app.app_context():
-        load_cfg("config.json")        
-        app.app_ctx_globals_class.db_conn = get_db()   
+        load_cfg("config.json")
+        app.app_ctx_globals_class.db_conn = get_db()
 
     app.run(port=app.config["PORT"])
-        

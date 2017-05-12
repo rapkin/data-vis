@@ -5,9 +5,9 @@
  	},
  	"Database": {
  		"database": "data-vis", 
-	    "user": "postgres",
+	    "user": "data-vis",
 	    "host": "127.0.0.1", 
-	    "password": "root",
+	    "password": "data-vis",
 	    "port": "5432"
  	},
  	"Mapbox": {

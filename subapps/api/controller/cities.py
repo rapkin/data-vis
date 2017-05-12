@@ -5,22 +5,17 @@ from subapps.api.models import cities
 
 class CitiesAPI(MethodView):
 
-    def __init__(self):
-        json_req = request.get_json(silent=True)
-        self.cities_id = json_req['id'] if json_req is not None else None
-        if self.cities_id is None:
-            try:
-                args = request.args.get('id').replace('[', '').replace(']', '')
-            except:
-                args = ''
-            self.cities_id = args.split(',') if args != '' else None
-
-
     def get(self):
-        if self.cities_id is not None:
-            data = cities.get_cities_by_id(self.cities_id)
+        try:
+            args = request.args.get('id').replace('[', '').replace(']', '')
+        except:
+            args = ''
+
+        if args != '':
+            data = cities.get_cities_by_id(args.split(','))
         else:
             data = cities.get_all()
+
         return jsonify({"list": data})
 
 

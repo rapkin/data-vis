@@ -54,8 +54,7 @@ def query(querySql):
     cursor = conn.cursor()
     cursor.execute(querySql)
     conn.commit()
-    result = cursor.fetchall()
-    return result
+    return cursor
 
 def import_data():
     with open(root+'/helpers/export/import.json', encoding='utf-8') as data_file:
