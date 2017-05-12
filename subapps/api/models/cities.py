@@ -32,6 +32,7 @@ def update_by_filter(data):
         res += "{0}='{1}'".format(item["filter_name"], item["filter_value"])
 
     query = db.query(res)
+    return [query.statusmessage]
 
 # data = [{
 #     "filter_name": "id",

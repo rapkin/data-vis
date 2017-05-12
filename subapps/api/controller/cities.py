@@ -21,8 +21,12 @@ class CitiesAPI(MethodView):
 
 
 
-#    def post(self):
-# update
+    def post(self):
+        json = request.get_json()
+
+        data = cities.update_by_filter(json)
+        status = data[0]
+        return jsonify({"message": status})
 
     #
     # def delete(self):
