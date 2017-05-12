@@ -22,16 +22,32 @@ class CitiesAPI(MethodView):
 
 
     def post(self):
+        """[
+        {
+            "filter_name": "id",
+            "filter_value": "2",
+            "values":{
+                "name": "check2"
+            }
+        }
+        ]"""
         json = request.get_json()
 
         data = cities.update_by_filter(json)
         status = data[0]
         return jsonify({"message": status})
 
-    #
-    # def delete(self):
-    #     #del city
-    #     pass
+    
+    def delete(self):
+        """
+        {"ids": [1,2,3,4,5]}
+        """
+        json = request.get_json()
+
+        data = cities.delete_by_id(json)
+        status = data[0]
+        return jsonify({"message": status})
+        
     #
     # def put(self):
     #     #add city
