@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request, current_app
 from subapps.api.controller import cities
-import json
-import subapps.api.models as models
+from subapps.api.controller import data_entries
+from subapps.api.controller import data_sets
+
 
 api = Blueprint('api', "api")
 
@@ -14,17 +15,15 @@ def send_config():
 cities_api = cities.CitiesAPI.as_view("cities_api")
 api.add_url_rule('/api/cities/',
                     view_func=cities_api,
-                    methods=['GET', 'POST', 'PUT'])
+                    methods=['GET', 'POST', 'PUT', 'DELETE'])
 
 
-@api.route('/api/data_sets/')
-def data_sets():
-    data = models.data_sets.get_all()
-    return jsonify({"sets":data})
+data_sets_api = data_sets.DataSetsAPI.as_view("data_sets_api")
+api.add_url_rule('/api/data_sets/',
+                    view_func=data_sets_api,
+                    methods=['GET', 'POST', 'PUT', 'DELETE'])
 
-
-@api.route('/api/data_entries/', methods=['GET', 'POST'])
-def data_entries():
-    filter = request.get_json(silent=True)
-    data = models.data_entries.get_by_set_city_time(filter)
-    return jsonify({"data":data})
+data_entries_api = data_entries.DataEntriesAPI.as_view("data_entries_api")
+api.add_url_rule('/api/data_entries/',
+                    view_func=data_entries_api,
+                    methods=['GET', 'POST', 'PUT', 'DELETE'])

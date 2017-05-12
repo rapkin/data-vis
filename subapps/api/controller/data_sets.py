@@ -1,9 +1,9 @@
 from flask.views import MethodView
 from flask import jsonify, request
-from subapps.api.models import cities
+from subapps.api.models import data_sets
 
 
-class CitiesAPI(MethodView):
+class DataSetsAPI(MethodView):
 
     def get(self):
         try:
@@ -12,9 +12,9 @@ class CitiesAPI(MethodView):
             args = ''
 
         if args != '':
-            data = cities.get_cities_by_id(args.split(','))
+            data = data_sets.get_by_id(args.split(','))
         else:
-            data = cities.get_all()
+            data = data_sets.get_all()
 
         status, values = data
         return jsonify({"list": values, "message": status})
@@ -33,7 +33,7 @@ class CitiesAPI(MethodView):
         ]"""
         json = request.get_json()
 
-        data = cities.update_by_filter(json)
+        data = data_sets.update_by_filter(json)
         status = data[0]
         return jsonify({"message": status})
 
@@ -46,7 +46,7 @@ class CitiesAPI(MethodView):
 
         ids = [str(id) for id in json["ids"]]
 
-        data = cities.delete_by_id(ids)
+        data = data_sets.delete_by_id(ids)
         status = data[0]
         return jsonify({"message": status})
         
@@ -55,14 +55,12 @@ class CitiesAPI(MethodView):
         """
         [
             {
-                "lat": 123.54,
-                "lon": 31.42,
                 "name": "some point"
             },
         ]
         """
         json = request.get_json()
 
-        data = cities.insert_many(json)
+        data = data_sets.insert_many(json)
         status = data[0]
         return jsonify({"message": status})

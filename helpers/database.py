@@ -47,8 +47,7 @@ def query(querySql):
     cursor = conn.cursor()
     cursor.execute(querySql)
     conn.commit()
-    result = cursor.fetchall()
-    return result
+    return cursor
 
 
 def import_data():
