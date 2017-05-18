@@ -17,7 +17,6 @@ api.add_url_rule('/api/cities/',
                     view_func=cities_api,
                     methods=['GET', 'POST', 'PUT', 'DELETE'])
 
-
 data_sets_api = data_sets.DataSetsAPI.as_view("data_sets_api")
 api.add_url_rule('/api/data_sets/',
                     view_func=data_sets_api,

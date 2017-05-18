@@ -67,11 +67,11 @@ class GenericModel():
 
 			value_str =  "("+', '.join(values)+")"
 
-		val_list.append(value_str)
+			val_list.append(value_str)
 
 		values_str = "("+', '.join(self.fields)+") VALUES " + ", ".join(val_list)
-	    
-		res = db.query(sql_insert_query + values_str)
-		res.close()
 
-		return [res.statusmessage]
+		print(sql_insert_query + values_str)
+		res = db.save(sql_insert_query + values_str)
+
+		return [res]

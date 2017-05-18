@@ -41,6 +41,15 @@ def create():
     conn.commit()
     print("Created tables successfully")
 
+def save(querySql):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute(querySql)
+    mes = cursor.statusmessage
+    cursor.close()
+    conn.commit()
+    return mes
+
 
 def query(querySql):
     conn = get_db()
