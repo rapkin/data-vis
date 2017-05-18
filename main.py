@@ -28,13 +28,7 @@ def root():
 
 
 if __name__ == "__main__":
-
-    # To init database uncoment code
-    # from helpers.database import init_db
-    # with app.app_context():
-    #     load_cfg("config.json")
-    #     init_db()
-
+    #app.config.from_object("configs.dev_cfg.DevelopmentConfig")
     with app.app_context():
         load_cfg("config.json")
         app.app_ctx_globals_class.db_conn = get_db()

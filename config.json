@@ -1,21 +1,18 @@
- {
- 	"Flask": {
- 		"DEBUG": 1,	    
-	    "PORT": 3333 
- 	},
- 	"Database": {
- 		"database": "data-vis", 
-	    "user": "data-vis",
-	    "host": "127.0.0.1", 
-	    "password": "data-vis",
-	    "port": "5432"
- 	},
- 	"Mapbox": {
- 		"token": "pk.eyJ1IjoicmFwa2luIiwiYSI6ImNpbDJqMjdtbjAwYnN3N20wcm5ocjZwNzQifQ.1e1M_mLQuD0xyi7ZrP0DCQ", 
-        "center": [48.8, 31.2], 
-        "zoom": 6 
- 	}
- }
-
- 	
-
+{
+    "Flask": {
+        "DEBUG": 1,
+        "PORT": 3333
+    },
+    "Database": {
+        "database": "data-vis",
+        "user": "data-vis",
+        "host": "127.0.0.1",
+        "password": "",
+        "port": "5432"
+    },
+    "Mapbox": {
+        "token": "pk.eyJ1IjoicmFwa2luIiwiYSI6ImNpbDJqMjdtbjAwYnN3N20wcm5ocjZwNzQifQ.1e1M_mLQuD0xyi7ZrP0DCQ",
+        "center": [48.8, 31.2],
+        "zoom": 6
+    }
+}

@@ -6,20 +6,21 @@
 * `sudo apt-get install postgresql postgresql-contrib`
 * `sudo apt-get install libpq-dev`
 
+### Mac OS
+
+* Install brew
+* `brew install python3`
+* `brew install postgresql`
+
 ### Both
 
 * Install Node.js
-* `npm install -g bower gulp coffee-script pug stylus`
-* `npm install` - node dependencies
-* `bower install` - frontend dependencies
-* `pip install -r requirements.txt` - to install all dependencies
+* `npm install` - init project (install all deps and build)
 
 ## Database
 
 * Install PostgreSQL
-* Enter shell: 'psql -U postgres'
-* `createdb data-vis`
-* `createuser data-vis -w 'data-vis'`
+* `npm run init-db` - to init database on install
 
 
 ## Build
