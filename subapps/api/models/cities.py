@@ -10,7 +10,7 @@ def get_all():
     return [res.statusmessage, res.fetchall()] 
 
 
-def get_cities_by_id(cities_id):
+def get_by_id(cities_id):
     filter_str = ' WHERE id IN ({})'.format(",".join(str(item) for item in cities_id))
     res = db.query(sql_select_query + filter_str)     
     return [res.statusmessage, res.fetchall()] 
