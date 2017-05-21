@@ -19,3 +19,10 @@ CREATE TABLE data_entries (
     FOREIGN KEY (set_id) REFERENCES data_sets(id) ON DELETE CASCADE,
     FOREIGN KEY (city_id) REFERENCES cities(id) ON DELETE CASCADE
 );
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username varchar(64) NOT NULL,
+    password varchar(64) NOT NULL,
+    token varchar(64)
+);
+

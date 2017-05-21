@@ -1,7 +1,5 @@
 from flask import Blueprint, jsonify, request, current_app
-from subapps.api.controller import cities
-from subapps.api.controller import data_entries
-from subapps.api.controller import data_sets
+from subapps.api.controller import cities , data_entries, data_sets
 
 
 api = Blueprint('api', "api")

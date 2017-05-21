@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h1> Message:  {{ data[0] }} </h1>
+	<table>
+	<tr>
+	{% for key in data[1][0] %}
+		<td>{{ key }}</td>
+  	{% endfor %}
+  	</tr>
+  {% for entry in data[1] %}
+  <tr>
+  	{% for key in entry %}
+    	<td>{{ entry[key] }}</td>
+  	{% endfor %}
+  </tr>
+  {% endfor %}
+{% endblock %}
