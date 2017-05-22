@@ -3,7 +3,7 @@ from helpers import database as db
 
 class DataEntriesModel(GenericModel):
     table = "data_entries"
-    fields = ["city_id", "set_id", "time", "value"]
+    fields = ["city_id", "set_id", "time", "value", "user_id"]
 
     def get_by_set_city_time(self, filtr):
         sql_query = 'SELECT * FROM ' + self.table

@@ -19,7 +19,7 @@ class UsersControler(MethodView):
     		mes += "  Token not provided in url args"
     	elif check:
             data = model.get_all()
-            return render_template("users.html", data=data)
+            return render_template("auth/users.html", data=data)
     	else:
     		mes += "  Token not in db"
 

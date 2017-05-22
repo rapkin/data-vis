@@ -7,7 +7,7 @@ from subapps.auth.models import login as model
 class LoginControler(MethodView):
 
     def get(self):
-        return render_template("login.html")
+        return render_template("auth/login.html")
 
     def post(self):
         """auth by form"""

@@ -6,7 +6,7 @@ from subapps.auth.models import logup as model
 class LogupControler(MethodView):
 
     def get(self):
-        return render_template("logup.html")
+        return render_template("auth/logup.html")
 
     def post(self):
         print(request.form)

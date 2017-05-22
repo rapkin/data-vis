@@ -6,7 +6,7 @@ auth = Blueprint('auth', "auth")
 
 @auth.route("/auth/")
 def send_index():
-	return render_template("auth_index.html")
+	return render_template("auth/auth_index.html")
 
 # @auth.route("/auth/logup")
 # def logup():

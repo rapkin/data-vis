@@ -10,10 +10,17 @@ class GenericControler(MethodView):
         except:
             args = ''
 
-        if args != '':
-            data = self.model.get_by_id(args.split(','))
+        if "token" in request.args:
+            token = request.args.get('token')
         else:
-            data = self.model.get_all()
+            token = False
+
+        if token and args!='':            
+            data = self.model.get_by_id_and_token(args, token)
+        elif not token:
+            return jsonify({"message": "Token not provided"})
+        elif token and args=='':
+            data = self.model.get_by_token(token)
 
         status, values = data
         return jsonify({"list": values, "message": status})
@@ -21,7 +28,8 @@ class GenericControler(MethodView):
 
 
     def post(self):
-        """[
+        """Old
+        [
         {
             "filter_name": "id",
             "filter_value": "2",
@@ -29,10 +37,23 @@ class GenericControler(MethodView):
                 "name": "check2"
             }
         }
-        ]"""
+        ]
+        New
+                {
+            "id": 1,
+            "token": ...
+            <"field">: <"value">,
+            ...
+        }
+        """
         json = request.get_json()
 
-        data = self.model.update_by_filter(json)
+        if "token" in json:
+            token = json["token"]
+        else:
+            return jsonify({"message": "Token not provided"})
+
+        data = self.model.update_by_id(json, token)
         status = data[0]
         return jsonify({"message": status})
 
@@ -43,9 +64,14 @@ class GenericControler(MethodView):
         """
         json = request.get_json()
 
+        if "token" in json:
+            token = json["token"]
+        else:
+            return jsonify({"message": "Token not provided"})
+
         ids = [str(id) for id in json["ids"]]
 
-        data = self.model.delete_by_id(ids)
+        data = self.model.delete_by_id(ids, token)
         status = data[0]
         return jsonify({"message": status})
         
@@ -56,7 +82,8 @@ class GenericControler(MethodView):
             {
                 "lat": 123.54,
                 "lon": 31.42,
-                "name": "some point"
+                "name": "some point",
+                "token": ...
             },
         ]
         """

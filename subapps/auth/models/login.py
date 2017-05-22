@@ -18,9 +18,12 @@ def login(user_data):
 		data = res.fetchone()
 		token = auth.create_token(user)
 		upd_mes = update_token(data["id"], token)
+		mes += "   " + upd_mes
+	else:
+		return [mes, None]
 	res.close()
 
-	return [mes +'  '+ upd_mes, token]
+	return [mes, token]
 
 def update_token(user_id, token):
 	sql_update_query = 'UPDATE ' + table
