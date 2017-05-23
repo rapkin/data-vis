@@ -2,8 +2,14 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username varchar(64) NOT NULL,
     password varchar(64) NOT NULL,
-    is_admin boolean NOT NULL,
-    token varchar(64)
+    is_admin boolean NOT NULL
+);
+CREATE TABLE tokens (
+    id SERIAL PRIMARY KEY,
+    token varchar(64) NOT NULL,
+    created varchar(64) NOT NULL,
+    user_id integer NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 CREATE TABLE cities (
     id SERIAL PRIMARY KEY,
