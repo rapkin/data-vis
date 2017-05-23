@@ -81,38 +81,3 @@ class GenericModel():
 
 		mes = db.save(insert_query)
 		return [mes]
-
-
-	def insert_many(self, data):
-		"""
-		[
-	 		{
-			"lat": 123.54,
-			"lon": 31.42,
-			"name": "some point",
-			token": ...
-			},
-	    ]
-	    """
-		#fields = ["name", "lat", "lon"]
-		token_query = "SELECT id FROM users WHERE token="
-		
-		sql_insert_query = 'INSERT INTO ' + self.table
-
-		val_list = []
-		for item in data:
-			token = item["token"]
-			res = db.query(token_query+"'"+token+"'")
-			item["user_id"] = res.fetchone()["id"]
-			values = ["'"+str(item[key])+"'" for key in self.fields]
-
-			value_str = " ("+', '.join(values)+")"
-
-			val_list.append(value_str)
-
-		values_str = "("+', '.join(self.fields)+") VALUES " + ", ".join(val_list)
-
-		print(sql_insert_query + values_str)
-		res = db.save(sql_insert_query + values_str)
-
-		return [res]
