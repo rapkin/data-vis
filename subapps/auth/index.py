@@ -4,14 +4,6 @@ from subapps.auth.controller import login, logup, users
 
 auth = Blueprint('auth', "auth")
 
-@auth.route("/auth/")
-def send_index():
-	return render_template("auth/auth_index.html")
-
-# @auth.route("/auth/logup")
-# def logup():
-# 	return render_template("logup.html")
-
 login_api = login.LoginControler.as_view("login")
 auth.add_url_rule('/auth/login/',
                     view_func=login_api,
