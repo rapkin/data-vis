@@ -19,27 +19,6 @@ class GenericModel():
 		res = db.query(sql_select_query + filter_str)     
 		return [res.statusmessage, res.fetchall()]
 
-	def get_by_token(self, token):
-		sql_select_query = "SELECT * FROM " + self.table
-		sql_select_query += " WHERE user_id=(SELECT id FROM"
-		sql_select_query += " users WHERE token="
-
-		sql_select_query += "'"+token+"')"
-
-		res = db.query(sql_select_query)
-		return [res.statusmessage, res.fetchall()]
-
-	def get_by_id_and_token(self, id, token):
-		sql_select_query = 'SELECT * FROM ' + self.table
-		filter_str = ' WHERE id IN ({})'.format(",".join(str(item) for item in id))
-
-		filter_str += " AND user_id=(SELECT id FROM"
-		filter_str += " users WHERE token="
-		filter_str += "'"+token+"')"
-
-		res = db.query(sql_select_query + filter_str)     
-		return [res.statusmessage, res.fetchall()]
-
 	def update_by_id(self, data, token):
 		"""{
 			"id": 1,

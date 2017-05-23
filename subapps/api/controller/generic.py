@@ -16,7 +16,7 @@ class GenericControler(MethodView):
         if args!='':
             data = self.model.get_by_id(args, user_id)
         else:
-            data = self.model.get_by_token(user_id)
+            data = self.model.get_all(user_id)
 
         status, values = data
         return jsonify({"list": values, "message": status})
