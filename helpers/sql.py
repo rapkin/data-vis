@@ -38,5 +38,21 @@ def delete(table, user_id, ids):
 
 	return delete_query
 
+def insert(table, user_id, data, fields):
+	insert_query = 'INSERT INTO ' + table
+	data["user_id"] = user_id
+
+	val_list = ["'"+str(data[key])+"'" for key in fields]
+	value_str = "("+', '.join(val_list)+")"
+	insert_query += " ("+', '.join(fields)+") VALUES " + value_str
+
+	return insert_query
+
+
 #update("cities", "1", {"id":1,"name":"loh", "lat":"heh"}, ["name", "lat", "lon", "user_id"])
 #delete("cities", "1", ["1",'2',"3"])
+# insert(
+# 	"cities", 
+# 	"1", 
+# 	{"lat": 123.54,"lon": 31.42,"name": "some point"}, 
+# 	["name", "lat", "lon", "user_id"])

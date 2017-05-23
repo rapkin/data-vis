@@ -73,17 +73,13 @@ class GenericModel():
 		return [res.statusmessage]
 
 	def insert_one(self, data, user_id):
-		sql_insert_query = 'INSERT INTO ' + self.table
+		insert_query = sql.insert(
+			self.table,
+			str(user_id),
+			data,
+			self.fields)
 
-		data["user_id"] = user_id
-
-		val_list = ["'"+str(data[key])+"'" for key in self.fields]
-		value_str = " ("+', '.join(val_list)+")"
-		sql_insert_query += "("+', '.join(self.fields)+") VALUES " + value_str
-
-		print(sql_insert_query)
-
-		mes = db.save(sql_insert_query)
+		mes = db.save(insert_query)
 		return [mes]
 
 
