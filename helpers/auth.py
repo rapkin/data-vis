@@ -43,10 +43,10 @@ def get_token():
 
 	return token
 
-def check_token():
+def check_token(status=False):
 	token = get_token()
 
-	select_query = 'SELECT user_id FROM tokens'
+	select_query = 'SELECT user_id, created FROM tokens'
 
 	select_query += " WHERE token="
 	select_query += "'"+str(token)+"'"
@@ -60,4 +60,15 @@ def check_token():
 	if mes[-1] != "1":
 		raise BadRequest("Token is not in db")
 
-	return mes
+	if status:
+		select_query = 'SELECT username, is_admin FROM users'
+
+		data = res.fetchone()
+
+		select_query += " WHERE id="+str(data["user_id"])
+		res = db.query(select_query)
+
+		data.update(res.fetchone())
+		res.close()
+		return data
+	

@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 from subapps.auth.controller import login, logup, users, logout
-
+from helpers.auth import check_token
+from flask import jsonify
 
 auth = Blueprint('auth', "auth")
 
@@ -23,3 +24,8 @@ logout_api = logout.LogoutControler.as_view("logout")
 auth.add_url_rule('/auth/logout/',
                     view_func=logout_api,
                     methods=['POST'])
+
+@auth.route('/auth/token/')
+def token_status():
+	data = check_token(status=True)
+	return jsonify(data)
