@@ -7,7 +7,7 @@ auth = Blueprint('auth', "auth")
 login_api = login.LoginControler.as_view("login")
 auth.add_url_rule('/auth/login/',
                     view_func=login_api,
-                    methods=['GET', 'POST'])
+                    methods=['POST'])
 
 logup_api = logup.LogupControler.as_view("logup")
 auth.add_url_rule('/auth/logup/',
@@ -17,7 +17,7 @@ auth.add_url_rule('/auth/logup/',
 users_api = users.UsersControler.as_view("users")
 auth.add_url_rule('/auth/users/',
                     view_func=users_api,
-                    methods=['POST'])
+                    methods=['GET'])
 
 logout_api = logout.LogoutControler.as_view("logout")
 auth.add_url_rule('/auth/logout/',

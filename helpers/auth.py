@@ -42,3 +42,22 @@ def get_token():
 		raise BadRequest("Token not provided in header Authorization")
 
 	return token
+
+def check_token():
+	token = get_token()
+
+	select_query = 'SELECT user_id FROM tokens'
+
+	select_query += " WHERE token="
+	select_query += "'"+str(token)+"'"
+
+	res = db.query(select_query)
+	mes = res.statusmessage
+	#data = res.fetchall()
+
+	#check = True if mes[-1] == "1" else False
+
+	if mes[-1] != "1":
+		raise BadRequest("Token is not in db")
+
+	return mes
