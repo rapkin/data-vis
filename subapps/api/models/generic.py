@@ -2,8 +2,6 @@ from helpers import database as db
 
 class GenericModel():
 
-	token_query = "user_id=(SELECT id FROM users WHERE token="
-
 	def get_all(self, user_id):
 		sql_select_query = 'SELECT * FROM ' + self.table
 		sql_select_query += " WHERE user_id="+str(user_id)
@@ -19,7 +17,7 @@ class GenericModel():
 		res = db.query(sql_select_query + filter_str)     
 		return [res.statusmessage, res.fetchall()]
 
-	def update_by_id(self, data, token):
+	def update_by_id(self, data, user_id):
 		"""{
 			"id": 1,
 			<"field">: <"value">,
@@ -38,10 +36,9 @@ class GenericModel():
 		sql_update_query += ','.join(pairs)
 		sql_update_query += ' WHERE id='+str(data["id"])
 
-		sql_update_query += " AND " + self.token_query
-		sql_update_query += "'"+token+"')"
+		sql_update_query += " AND user_id="+str(user_id)
 
-		query = db.query(sql_update_query)
+		query = db.save(sql_update_query)
 		return [query.statusmessage]
 
 
@@ -68,20 +65,30 @@ class GenericModel():
 		return [query.statusmessage]
 
 
-	def delete_by_id(self, ids, token):
+	def delete_by_id(self, ids, user_id):
 		"""
 			{"ids": [1,2,3,4,5]}
 		"""
 		sql_delete_query = 'DELETE FROM ' + self.table
 		filter_str = ' WHERE id IN ('+', '.join(ids)+')'
-		filter_str += " AND " + self.token_query
-		filter_str += "'"+token+"')"
+		filter_str += " AND user_id="+str(user_id)
 
 		res = db.query(sql_delete_query + filter_str)
 		return [res.statusmessage]
 
-	#def insert_one(self, data, token):
+	def insert_one(self, data, user_id):
+		sql_insert_query = 'INSERT INTO ' + self.table
 
+		data["user_id"] = user_id
+
+		val_list = ["'"+str(data[key])+"'" for key in self.fields]
+		value_str = " ("+', '.join(val_list)+")"
+		sql_insert_query += "("+', '.join(self.fields)+") VALUES " + value_str
+
+		print(sql_insert_query)
+
+		mes = db.save(sql_insert_query)
+		return [mes]
 
 
 	def insert_many(self, data):

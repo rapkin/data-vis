@@ -41,13 +41,9 @@ class GenericControler(MethodView):
         }
         """
         json = request.get_json()
+        user_id = check_token()
 
-        if "token" in json:
-            token = json["token"]
-        else:
-            return jsonify({"message": "Token not provided"})
-
-        data = self.model.update_by_id(json, token)
+        data = self.model.update_by_id(json, user_id)
         status = data[0]
         return jsonify({"message": status})
 
@@ -57,32 +53,28 @@ class GenericControler(MethodView):
         {"ids": [1,2,3,4,5]}
         """
         json = request.get_json()
-
-        if "token" in json:
-            token = json["token"]
-        else:
-            return jsonify({"message": "Token not provided"})
+        user_id = check_token()
 
         ids = [str(id) for id in json["ids"]]
 
-        data = self.model.delete_by_id(ids, token)
+        data = self.model.delete_by_id(ids, user_id)
         status = data[0]
         return jsonify({"message": status})
         
     
     def put(self):
         """
-        [
+        
             {
                 "lat": 123.54,
                 "lon": 31.42,
                 "name": "some point",
-                "token": ...
             },
-        ]
+        
         """
         json = request.get_json()
+        user_id = check_token()
 
-        data = self.model.insert_many(json)
+        data = self.model.insert_one(json, user_id)
         status = data[0]
         return jsonify({"message": status})
