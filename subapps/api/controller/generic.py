@@ -1,5 +1,6 @@
 from flask.views import MethodView
 from flask import jsonify, request
+from helpers.auth import check_token
 
 
 class GenericControler(MethodView):
@@ -10,17 +11,12 @@ class GenericControler(MethodView):
         except:
             args = ''
 
-        if "token" in request.args:
-            token = request.args.get('token')
-        else:
-            token = False
+        user_id = check_token()
 
-        if token and args!='':            
-            data = self.model.get_by_id_and_token(args, token)
-        elif not token:
-            return jsonify({"message": "Token not provided"})
-        elif token and args=='':
-            data = self.model.get_by_token(token)
+        if args!='':
+            data = self.model.get_by_id(args, user_id)
+        else:
+            data = self.model.get_by_token(user_id)
 
         status, values = data
         return jsonify({"list": values, "message": status})

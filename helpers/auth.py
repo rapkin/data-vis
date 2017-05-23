@@ -22,8 +22,6 @@ def insert_token(user_id, token):
 		token_old = data["token"]
 		return [mes + "  exist", token_time, token_old]
 
-	print(mes)
-
 	insert_query = 'INSERT INTO tokens'
 
 	val_list = ["'"+str(token)+"'", "'"+str(token_time)+"'", str(user_id)]
@@ -71,4 +69,8 @@ def check_token(status=False):
 		data.update(res.fetchone())
 		res.close()
 		return data
+
+	data = res.fetchone()
+	return data["user_id"]
+
 	

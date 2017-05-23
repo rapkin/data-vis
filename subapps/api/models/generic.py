@@ -4,15 +4,18 @@ class GenericModel():
 
 	token_query = "user_id=(SELECT id FROM users WHERE token="
 
-	def get_all(self):
+	def get_all(self, user_id):
 		sql_select_query = 'SELECT * FROM ' + self.table
+		sql_select_query += " WHERE user_id="+str(user_id)
 		res = db.query(sql_select_query)
 		return [res.statusmessage, res.fetchall()] 
 
 
-	def get_by_id(self, id):
+	def get_by_id(self, id, user_id):
 		sql_select_query = 'SELECT * FROM ' + self.table
 		filter_str = ' WHERE id IN ({})'.format(",".join(str(item) for item in id))
+		sql_select_query += filter_str
+		sql_select_query += " AND user_id="+str(user_id)
 		res = db.query(sql_select_query + filter_str)     
 		return [res.statusmessage, res.fetchall()]
 
