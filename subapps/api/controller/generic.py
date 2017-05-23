@@ -21,8 +21,6 @@ class GenericControler(MethodView):
         status, values = data
         return jsonify({"list": values, "message": status})
 
-
-
     def post(self):
         """Old
         [
