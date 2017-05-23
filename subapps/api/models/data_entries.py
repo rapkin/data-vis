@@ -5,7 +5,7 @@ class DataEntriesModel(GenericModel):
     table = "data_entries"
     fields = ["city_id", "set_id", "time", "value", "user_id"]
 
-    def get_by_set_city_time(self, filtr):
+    def get_by_set_city_time(self, filtr, user_id):
         sql_query = 'SELECT * FROM ' + self.table
 
         if filtr is not None:
@@ -24,6 +24,8 @@ class DataEntriesModel(GenericModel):
             if sql_filter_list:
                 sql_query += ' WHERE '
                 sql_query += ' AND '.join(sql_filter_list)
+
+        sql_query += " AND user_id="+str(user_id)
         res = db.query(sql_query)
 
         return [res.statusmessage, res.fetchall()]

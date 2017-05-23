@@ -14,7 +14,7 @@ class GenericModel():
 		filter_str = ' WHERE id IN ({})'.format(",".join(str(item) for item in id))
 		sql_select_query += filter_str
 		sql_select_query += " AND user_id="+str(user_id)
-		res = db.query(sql_select_query + filter_str)     
+		res = db.query(sql_select_query)     
 		return [res.statusmessage, res.fetchall()]
 
 	def update_by_id(self, data, user_id):
