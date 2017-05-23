@@ -4,15 +4,15 @@ from helpers import sql
 class GenericModel():
 
 	def get_all(self, user_id):
-		sql_select_query = sql.select(self.table, str(user_id))
-		res = db.query(sql_select_query)
+		select_query = sql.select(self.table, str(user_id))
+		res = db.query(select_query)
 		return [res.statusmessage, res.fetchall()] 
 
 
-	def get_by_id(self, id, user_id):
-		sql_select_query = sql.select(self.table, str(user_id), id)
+	def get_by_id(self, ids, user_id):
+		select_query = sql.select(self.table, str(user_id), ids)
 
-		res = db.query(sql_select_query)     
+		res = db.query(select_query)     
 		return [res.statusmessage, res.fetchall()]
 
 	def update_by_id(self, data, user_id):
@@ -22,22 +22,16 @@ class GenericModel():
 			...
 		}
 		"""
-		sql_update_query = 'UPDATE ' + self.table
 
-		sql_update_query += " SET "
+		update_query = sql.update(
+			self.table,
+			str(user_id),
+			data,
+			self.fields
+			)
 
-		pairs = []
-		for key in data:
-			if key in self.fields:
-				pairs.append("{0}='{1}'".format(key, str(data[key])))
-
-		sql_update_query += ','.join(pairs)
-		sql_update_query += ' WHERE id='+str(data["id"])
-
-		sql_update_query += " AND user_id="+str(user_id)
-
-		query = db.save(sql_update_query)
-		return [query.statusmessage]
+		mes = db.save(update_query)
+		return [mes]
 
 
 
