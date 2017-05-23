@@ -1,10 +1,10 @@
 from helpers import database as db
+from helpers import sql
 
 class GenericModel():
 
 	def get_all(self, user_id):
-		sql_select_query = 'SELECT * FROM ' + self.table
-		sql_select_query += " WHERE user_id="+str(user_id)
+		sql_select_query = sql.select(self.table, str(user_id))
 		res = db.query(sql_select_query)
 		return [res.statusmessage, res.fetchall()] 
 
