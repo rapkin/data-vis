@@ -31,4 +31,12 @@ def update(table, user_id, data, fields):
 
 	return update_query
 
+def delete(table, user_id, ids):
+	delete_query = 'DELETE FROM ' + table
+	delete_query += ' WHERE id IN ('+', '.join(ids)+')'
+	delete_query += " AND user_id="+str(user_id)
+
+	return delete_query
+
 #update("cities", "1", {"id":1,"name":"loh", "lat":"heh"}, ["name", "lat", "lon", "user_id"])
+#delete("cities", "1", ["1",'2',"3"])

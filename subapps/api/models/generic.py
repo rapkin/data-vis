@@ -10,7 +10,10 @@ class GenericModel():
 
 
 	def get_by_id(self, ids, user_id):
-		select_query = sql.select(self.table, str(user_id), ids)
+		select_query = sql.select(
+			self.table, 
+			str(user_id), 
+			ids)
 
 		res = db.query(select_query)     
 		return [res.statusmessage, res.fetchall()]
@@ -27,8 +30,7 @@ class GenericModel():
 			self.table,
 			str(user_id),
 			data,
-			self.fields
-			)
+			self.fields)
 
 		mes = db.save(update_query)
 		return [mes]
@@ -61,11 +63,13 @@ class GenericModel():
 		"""
 			{"ids": [1,2,3,4,5]}
 		"""
-		sql_delete_query = 'DELETE FROM ' + self.table
-		filter_str = ' WHERE id IN ('+', '.join(ids)+')'
-		filter_str += " AND user_id="+str(user_id)
 
-		res = db.query(sql_delete_query + filter_str)
+		delete_query = sql.delete(
+			self.table,
+			str(user_id),
+			ids)
+
+		res = db.query(delete_query)
 		return [res.statusmessage]
 
 	def insert_one(self, data, user_id):
