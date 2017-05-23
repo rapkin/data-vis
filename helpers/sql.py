@@ -1,10 +1,8 @@
-def select(table, user_id, constrains='', fields="*"):
+def select(table, user_id, constr='', fields="*"):
 	"""
 		fields = []
-		constrains = [1,2,3]
+		constr = [1,2,3] /id
 	"""
-
-
 	if fields!='*':
 		fields = ", ".join(fields)
 
@@ -12,8 +10,8 @@ def select(table, user_id, constrains='', fields="*"):
 	select_query += table
 	select_query += " WHERE user_id="+user_id
 
-	if constrains!='':
+	if constr!='':
 		select_query += " AND "
-		select_query += 'id IN ({})'.format(",".join(str(item) for item in constrains))
+		select_query += 'id IN ({})'.format(",".join(str(item) for item in constr))
 
 	return select_query

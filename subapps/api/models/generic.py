@@ -10,10 +10,8 @@ class GenericModel():
 
 
 	def get_by_id(self, id, user_id):
-		sql_select_query = 'SELECT * FROM ' + self.table
-		filter_str = ' WHERE id IN ({})'.format(",".join(str(item) for item in id))
-		sql_select_query += filter_str
-		sql_select_query += " AND user_id="+str(user_id)
+		sql_select_query = sql.select(self.table, str(user_id), id)
+
 		res = db.query(sql_select_query)     
 		return [res.statusmessage, res.fetchall()]
 
