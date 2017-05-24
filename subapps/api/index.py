@@ -27,4 +27,4 @@ api.add_url_rule('/api/data_entries/',
 search_api = search.SearchAPI.as_view("search_api")
 api.add_url_rule('/api/search/',
                     view_func=search_api,
-                    methods=['GET'])
+                    methods=['GET', 'POST'])

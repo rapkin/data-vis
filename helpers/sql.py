@@ -48,17 +48,38 @@ def insert(table, user_id, data, fields):
 
 	return insert_query
 
-def search(user_id, name, table):
-	select_query = 'SELECT * FROM '+table
+def search(user_id, table, fltr_val="", fields="*", fltr="name"):
+	if fields!="*":
+		fields = ", ".join(fields)
 
-	select_query += " WHERE user_id="+str(user_id)	
-	select_query += " AND name LIKE '%"+name+"%'"
+	select_query = 'SELECT '+fields+' FROM '+table
+
+	select_query += " WHERE user_id="+str(user_id)
+	if fltr_val	!= "":
+		select_query += " AND "+fltr+" LIKE '%"+fltr_val+"%'"
 
 	return select_query
 
+def search_by_fields(user_id, table, fields, fltr):
+	fields_str = ", ".join(fields)
+	select_query = 'SELECT '+fields_str+' FROM '+table
+
+	select_query += " WHERE user_id="+str(user_id)
+
+	contr_list = []
+	for field in fields:
+		constr = field + " LIKE '%" + fltr + "%'"
+		contr_list.append(constr)
+
+	select_query += " AND " + " OR ".join(contr_list)+""
+
+	return select_query
+
+#search_by_fields("1","cities", ["name", "lat"], "1")
 
 
-#search("1", "loh", "cities")
+
+#search("1", "loh", "cities", ["name"])
 
 #update("cities", "1", {"id":1,"name":"loh", "lat":"heh"}, ["name", "lat", "lon", "user_id"])
 #delete("cities", "1", ["1",'2',"3"])
