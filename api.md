@@ -34,7 +34,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
     "list": [
         {
             "id": 1,
@@ -57,7 +57,7 @@ __Request:__
 ```json
 {
     "id": 1,
-    <"field">: <"value">, ... 
+    "<field>": "<value>",
 }
 ```
 
@@ -65,7 +65,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -83,7 +83,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -103,7 +103,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -115,7 +115,7 @@ __Response:__
 
 ```json
 {
-    "message": ...,
+    "message": "..." ,
     "list": [
         {
             "id": 1,
@@ -133,7 +133,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
     "list": [
         {
             "id": 1,
@@ -154,7 +154,7 @@ __Request:__
 ```json
 {
     "id": 1,
-    <"field">: <"value">, ... 
+    "<field>": "<value>",
 }
 ```
 
@@ -162,7 +162,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -180,7 +180,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -198,7 +198,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -209,7 +209,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
     "list": [
         {
             "id": 1,
@@ -241,7 +241,7 @@ __Request:__
 ```json
 {
     "id": 1,
-    <"field">: <"value">, ... 
+    "<field>": "<value>",
 }
 ```
 
@@ -249,7 +249,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -267,7 +267,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -289,7 +289,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -300,7 +300,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
     "list": {
         "cities": [
             {
@@ -333,16 +333,16 @@ __Response:__
 __Request:__
 ```json
 {
-    "username": ...,
-    "password": ...
+    "username": "..." ,
+    "password": "..." 
 }
 ```
 __Response:__
 
 ```json
 {   
-    "message": ...,
-    "token": ...
+    "message": "..." ,
+    "token": "..."
 }
 ```
 ### POST logup/
@@ -350,8 +350,8 @@ __Response:__
 __Request:__
 ```json
 {
-    "username": ...,
-    "password": ...
+    "username": "..." ,
+    "password": "..."
 }
 ```
 
@@ -359,7 +359,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -369,7 +369,7 @@ __Response:__
 
 ```json
 {   
-    "message": ...,
+    "message": "..." ,
 }
 ```
 
@@ -380,10 +380,10 @@ __Response:__
 
 ```json
 {   
-    "username": ...,
-    "is_admin": bool,
-    "user_id": ...,
-    "created": ...
+    "username": "..." ,
+    "is_admin": "..." ,
+    "user_id": "..." ,
+    "created": "..."
 
 }
 ```
