@@ -23,7 +23,7 @@ auth.add_url_rule('/auth/users/',
 logout_api = logout.LogoutControler.as_view("logout")
 auth.add_url_rule('/auth/logout/',
                     view_func=logout_api,
-                    methods=['POST'])
+                    methods=['GET'])
 
 @auth.route('/auth/token/')
 def token_status():

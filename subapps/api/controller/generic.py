@@ -35,7 +35,6 @@ class GenericControler(MethodView):
         New
                 {
             "id": 1,
-            "token": ...
             <"field">: <"value">,
             ...
         }
