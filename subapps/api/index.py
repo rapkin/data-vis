@@ -1,5 +1,5 @@
-from flask import Blueprint, jsonify, request, current_app
-from subapps.api.controller import cities , data_entries, data_sets
+from flask import Blueprint, jsonify, current_app
+from subapps.api.controller import cities , data_entries, data_sets, search
 
 
 api = Blueprint('api', "api")
@@ -8,7 +8,6 @@ api = Blueprint('api', "api")
 def send_config():
     cfg = current_app.config["MAPBOX"]
     return jsonify(cfg)
-
 
 cities_api = cities.CitiesAPI.as_view("cities_api")
 api.add_url_rule('/api/cities/',
@@ -24,3 +23,8 @@ data_entries_api = data_entries.DataEntriesAPI.as_view("data_entries_api")
 api.add_url_rule('/api/data_entries/',
                     view_func=data_entries_api,
                     methods=['GET', 'POST', 'PUT', 'DELETE'])
+
+search_api = search.SearchAPI.as_view("search_api")
+api.add_url_rule('/api/search/',
+                    view_func=search_api,
+                    methods=['GET'])
