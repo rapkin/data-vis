@@ -60,25 +60,6 @@ def search(user_id, table, fltr_val="", fields="*", fltr="name"):
 
 	return select_query
 
-def search_by_fields(user_id, table, fields, fltr):
-	fields_str = ", ".join(fields)
-	select_query = 'SELECT '+fields_str+' FROM '+table
-
-	select_query += " WHERE user_id="+str(user_id)
-
-	contr_list = []
-	for field in fields:
-		constr = field + " LIKE '%" + fltr + "%'"
-		contr_list.append(constr)
-
-	select_query += " AND " + " OR ".join(contr_list)+""
-
-	return select_query
-
-#search_by_fields("1","cities", ["name", "lat"], "1")
-
-
-
 #search("1", "loh", "cities", ["name"])
 
 #update("cities", "1", {"id":1,"name":"loh", "lat":"heh"}, ["name", "lat", "lon", "user_id"])
