@@ -7,7 +7,7 @@ from subapps.auth.models import login as model
 class LoginControler(MethodView):
 
     def post(self):
-        """auth by form"""
+        """auth by json"""
         username = request.json["username"]
         password = request.json["password"]
         username = str(username)
