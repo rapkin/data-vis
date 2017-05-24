@@ -3,13 +3,13 @@
 Опис структури API.
 
  * `"..."` - позначка одиничних данних.
- * `{"...."}` - позначка повторюваних данних.
+ * `{"..."}` - позначка повторюваних данних.
  * `"<name>"` - підстановка поля з ключом _name_
 
 ## Отримання данних
 
 ### GET /config/
-Віддає config.json
+Віддає MapBox config з config.json
 
 __Response:__
 
@@ -20,14 +20,21 @@ __Response:__
     "zoom": 6
 }
 ```
+### api/
 
-### GET api/cities/
-Віддає список всіх міст
+### header
+Авторизуе користувача, обов'язкове поле для роботи з api/
+
+Authorization: <token>
+
+### GET cities/
+Віддає список всіх міст 
 
 __Response:__
 
 ```json
-{
+{   
+    "message": ...,
     "list": [
         {
             "id": 1,
@@ -40,14 +47,76 @@ __Response:__
 }
 ```
 
-### GET api/data_sets/
+### GET cities/?id=...
+Віддає список міст з заданим id
+
+### POST cities/
+Оновлюе місто задане через id
+
+__Request:__
+```json
+{
+    "id": 1,
+    <"field">: <"value">, ... 
+}
+```
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+}
+```
+
+### DELETE cities/
+Видаляе місто задане через id
+
+__Request:__
+```json
+{
+    "ids": [1,2,3,4,5],
+}
+```
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+}
+```
+
+### PUT cities/
+Зберігає місто усі поля обов'язкові
+
+__Request:__
+```json
+{
+    "lat": 123.54,
+    "lon": 31.42,
+    "name": "some point",
+}
+```
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+}
+```
+
+
+### GET data_sets/
 Віддає список всіх наборів данних
 
 __Response:__
 
 ```json
 {
-    "sets": [
+    "message": ...,
+    "list": [
         {
             "id": 1,
             "name": "Народжуваність"
@@ -57,23 +126,91 @@ __Response:__
 }
 ```
 
-
-### POST api/data_entries/
-Віддає всі данні по наборах данних
-(Передбачити пагінацію)
-
-Якщо якесь поле відсутнє (або null), то не враховувати при вибірці. Також якщо передано пусте тіло (не предано жодного фільтру), то проведеться вибірка усіх данних.
-
-Список фільтрів:
- * `sets` - список ID наборів данних
- * `cities` - список ID міст
- * `after` / `before` - верхня / нижня часова межа вибірки
+### GET data_sets/
+Віддає список всіх наборів данних 
 
 __Response:__
 
 ```json
+{   
+    "message": ...,
+    "list": [
+        {
+            "id": 1,
+            "name": "...",
+        },
+        {"...."}
+    ]
+}
+```
+
+### GET data_sets/?id=...
+Віддає список наборів данних з заданим id
+
+### POST data_sets/
+Оновлюе набір данних заданий через id
+
+__Request:__
+```json
 {
-    "data": [
+    "id": 1,
+    <"field">: <"value">, ... 
+}
+```
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+}
+```
+
+### DELETE data_sets/
+Видаляе набір данних задане через id
+
+__Request:__
+```json
+{
+    "ids": [1,2,3,4,5],
+}
+```
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+}
+```
+
+### PUT data_sets/
+Зберігає набір данних усі поля обов'язкові
+
+__Request:__
+```json
+{
+    "name": "some data_set",
+}
+```
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+}
+```
+
+### GET data_entries/
+Віддає список всіх данних 
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+    "list": [
         {
             "id": 1,
             "value": 42,
@@ -86,53 +223,134 @@ __Response:__
 }
 ```
 
-### PUT /cities/
-Створює нове місто (потрібно передати назву та координати).
-Всі три поля є обов'язковими
+### GET data_entries/?id=...
+Віддає список данних з заданим id.
+
+### GET data_entries/?<filter>=...&...
+Список фільтрів:
+ * `sets` - список ID наборів данних
+ * `cities` - список ID міст
+ * `after` / `before` - верхня / нижня часова межа вибірки
+Віддає список данних з заданим фільтром.
+Якщо задано id=... то GET data_entries/?id=...
+
+### POST data_entries/
+Оновлюе данні задані через id
 
 __Request:__
-
 ```json
 {
-    "name": "...",
-    "lat": 50.447,
-    "lon": 30.550
+    "id": 1,
+    <"field">: <"value">, ... 
 }
 ```
 
 __Response:__
 
 ```json
-{
-    "id": 1,
-    "name": "...",
-    "lat": 50.447,
-    "lon": 30.550
+{   
+    "message": ...,
 }
 ```
 
-### POST /cities/
-Зберігає існуюче місто.
-
-`id` - обовязковий параметр.
-Також обов'язково має передаватись один з інших параметрів.
+### DELETE data_entries/
+Видаляе данні задані через id
 
 __Request:__
-
 ```json
 {
-    "id": 1,
-    "name": "..."
+    "ids": [1,2,3,4,5],
 }
 ```
 
 __Response:__
 
 ```json
+{   
+    "message": ...,
+}
+```
+
+### PUT data_entries/
+Зберігає набір данних усі поля обов'язкові
+
+__Request:__
+```json
 {
     "id": 1,
-    "name": "...",
-    "lat": 50.447,
-    "lon": 30.550
+    "value": 42,
+    "time": 1458421488,
+    "set_id": 1,
+    "city_id": 1
+}
+```
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+}
+```
+
+### auth/
+
+### POST login/
+
+__Request:__
+```json
+{
+    "username": ...,
+    "password": ...
+}
+```
+__Response:__
+
+```json
+{   
+    "message": ...,
+    "token": ...
+}
+```
+### POST logup/
+
+__Request:__
+```json
+{
+    "username": ...,
+    "password": ...
+}
+```
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+}
+```
+
+### GET logup/
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+}
+```
+
+### GET token/
+Віддає статус токену
+
+__Response:__
+
+```json
+{   
+    "username": ...,
+    "is_admin": bool,
+    "user_id": ...,
+    "created": ...
+
 }
 ```
