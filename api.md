@@ -293,6 +293,39 @@ __Response:__
 }
 ```
 
+### GET api/search/?q=...
+Виконуе пошук по полю name н таблицях coties, data_sets
+
+__Response:__
+
+```json
+{   
+    "message": ...,
+    "list": {
+        "cities": [
+            {
+                "id": 1,
+                "name": "Київ",
+                "lat": 50.447,
+                "lon": 30.550
+            },
+            {"...."}
+        ],
+        "data_sets": [
+            {
+                "id": 1,
+                "value": 42,
+                "time": 1458421488,
+                "set_id": 1,
+                "city_id": 1
+            },
+            {"...."}
+        ]
+    }   
+}
+```
+
+
 ### auth/
 
 ### POST login/
