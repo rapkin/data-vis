@@ -48,6 +48,17 @@ def insert(table, user_id, data, fields):
 
 	return insert_query
 
+def search(user_id, name, table):
+	select_query = 'SELECT * FROM '+table
+
+	select_query += " WHERE user_id="+str(user_id)	
+	select_query += " AND name LIKE '%"+name+"%'"
+
+	return select_query
+
+
+
+#search("1", "loh", "cities")
 
 #update("cities", "1", {"id":1,"name":"loh", "lat":"heh"}, ["name", "lat", "lon", "user_id"])
 #delete("cities", "1", ["1",'2',"3"])
