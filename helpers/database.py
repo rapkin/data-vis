@@ -3,6 +3,7 @@ import psycopg2.extras
 import json
 from os import path
 from flask import current_app, g
+from werkzeug.exceptions import BadRequest
 root = path.dirname(path.dirname(path.realpath(__file__)))
 
 def get_db():
@@ -44,17 +45,30 @@ def create():
 def save(querySql):
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(querySql)
-    mes = cursor.statusmessage
-    cursor.close()
-    conn.commit()
+    try:
+        cursor.execute(querySql)
+        mes = cursor.statusmessage
+    except Exception as e:
+        print(e)
+        print("\n\n"+cursor.statusmessage)
+        cursor.close()
+        raise BadRequest("Iternal db save error")
+    else:
+        cursor.close()
+        conn.commit()
     return mes
 
 
 def query(querySql):
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(querySql)
+    try:
+        cursor.execute(querySql)
+    except Exception as e:
+        print(e)
+        print("\n\n"+cursor.statusmessage)
+        cursor.close()
+        raise BadRequest("Iternal db error")
     conn.commit()
     return cursor
 
