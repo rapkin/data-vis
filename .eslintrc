@@ -1,0 +1,31 @@
+{
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2017,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "spread": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "semi": ["error", "never"],
+        "quotes": ["error", "single"],
+        "no-tabs": ["error"],
+        "max-len": ["error", 100],
+        "no-trailing-spaces": ["error", {"skipBlankLines": false}],
+        "eol-last": ["error"],
+        "react/jsx-uses-react": 2,
+        "react/jsx-uses-vars": 2,
+        "react/react-in-jsx-scope": 2
+    },
+    "plugins": ["react"],
+    "globals": {
+        "console": true,
+        "document": true,
+        "window": true,
+        "exports": true
+    }
+}

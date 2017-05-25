@@ -9,25 +9,19 @@ from helpers.config import load_cfg
 
 app = Flask(__name__)
 
-#/api/ routes
 app.register_blueprint(api)
-#/auth/ routes
 app.register_blueprint(auth)
 
 
-@app.route('/static/<path:path>')
-def send_static(path):
-    return send_from_directory('static', path)
-
-
-@app.route('/bower_components/<path:path>')
-def send_bower_components(path):
-    return send_from_directory('bower_components', path)
+@app.route('/dist/<path:path>')
+def send_dist(path):
+    app.logger.error(path)
+    return send_from_directory('dist', path)
 
 
 @app.route('/')
 def root():
-    return send_from_directory('static', 'index.html')
+    return send_from_directory('dist', 'index.html')
 
 
 if __name__ == "__main__":

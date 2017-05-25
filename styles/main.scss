@@ -1,0 +1,10 @@
+$fa-font-path: "~font-awesome/fonts";
+@import "~font-awesome/scss/font-awesome";
+
+body {
+    padding: 0;
+    margin: 0;
+    background: #333;
+    color: #fff;
+    font-family: sans-serif;
+}
