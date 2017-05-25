@@ -1,47 +1,73 @@
 import psycopg2
 import psycopg2.extras
 import json
-import os
-root = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+from os import path
+from flask import current_app, g
+root = path.dirname(path.dirname(path.realpath(__file__)))
 
-conn = psycopg2.connect(
-    database="data-vis",
-    user="data-vis",
-    host="127.0.0.1",
-    password='data-vis',
-    port="5432",
-    cursor_factory=psycopg2.extras.RealDictCursor)
+def get_db():
+    db = getattr(g, 'db_conn', None)
+    if db is None:
+        db_cfg = current_app.config["DATABASE"]
+        db = g.db_conn = psycopg2.connect(
+                database=db_cfg["database"],
+                user=db_cfg["user"],
+                host=db_cfg["host"],
+                password=db_cfg["password"],
+                port=db_cfg["port"],
+                cursor_factory=psycopg2.extras.RealDictCursor)
 
-print("Opened database successfully")
+    return db
+
+
+def init_db():
+    remove()
+    create()
+    import_data()
+
 
 def remove():
+    conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(open(root+"/sql/drop_tables.sql", "r").read())
+    cursor.execute(open(root+"/helpers/sql/drop_tables.sql", "r").read())
     conn.commit()
     print("Removed tables successfully")
 
+
 def create():
+    conn = get_db()
     cursor = conn.cursor()
-    cursor.execute(open(root+"/sql/create_tables.sql", "r").read())
+    cursor.execute(open(root+"/helpers/sql/create_tables.sql", "r").read())
     conn.commit()
     print("Created tables successfully")
 
+def save(querySql):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute(querySql)
+    mes = cursor.statusmessage
+    cursor.close()
+    conn.commit()
+    return mes
+
+
 def query(querySql):
+    conn = get_db()
     cursor = conn.cursor()
     cursor.execute(querySql)
     conn.commit()
-    result = cursor.fetchall()
-    return result
+    return cursor
+
 
 def import_data():
-    remove()
-    create()
-    with open(root+'/export/import.json', encoding='utf-8') as data_file:
+    with open(root+'/helpers/export/import.json', encoding='utf-8') as data_file:
         data = json.load(data_file)
     insert_data(data)
 
+
 def insert_data(data):
-    table_queue = ['cities','data_sets', 'data_entries']
+    conn = get_db()
+    table_queue = ['users', 'cities','data_sets', 'data_entries']
 
     for table_name in table_queue:
         table_fields = data[table_name][0].keys()
@@ -65,4 +91,5 @@ def insert_data(data):
         )
         cursor = conn.cursor()
         cursor.execute(sql_string, fields_value_flat)
+        cursor.close()
         conn.commit()

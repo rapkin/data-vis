@@ -4,7 +4,13 @@
   "description": "Data visualisation with python backend",
   "main": "main.py",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp",
+    "frontend-deps": "bower install",
+    "python-deps": "pip install -r requirements.txt",
+    "install": "npm run python-deps && npm run frontend-deps && npm run build",
+    "init-db": "createdb data-vis && createuser -w 'data-vis' && python init_db.py",
+    "start": "python main.py"
   },
   "repository": {
     "type": "git",
