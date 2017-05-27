@@ -1,7 +1,7 @@
 import React from 'react'
 import Leaflet from 'leaflet'
-import {Map, Marker, Tooltip, TileLayer, Rectangle} from 'react-leaflet'
-import {Mapbox as config} from '../../config.json'
+import { Map, Marker, Tooltip, TileLayer, Rectangle } from 'react-leaflet'
+import { Mapbox as config } from '../../config.json'
 
 Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images/' // fixme
 const [cx, cy] = config.center

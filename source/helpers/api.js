@@ -1,13 +1,11 @@
-import { SubmissionError } from 'redux-form'
 import axios from 'axios'
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
+import { SubmissionError } from 'redux-form'
 
 const createHandler = (type, url) => (data) =>
-    sleep(1000).then(() => axios[type](url, data)
+    axios[type](url, data)
         .catch(err => {
             throw new SubmissionError({_error: err.toString()})
         })
-    )
 
 export default class Api {
     constructor(root, version = 'api') {
@@ -17,21 +15,26 @@ export default class Api {
     }
 
     _registerHandler(type, subroute) {
-        const handler = createHandler('post', `/${this.root}/${subroute}/`)
+        const segments = []
+        if (this.version) segments.push(this.version)
+        if (this.root) segments.push(this.root)
+        if (subroute) segments.push(subroute)
+
+        const handler = createHandler('post', `/${segments.join('/')}/`)
         this.routes[subroute] = this.routes[subroute] || handler
         this.routes[subroute][type] = handler
         return handler
     }
 
-    get(subroute = '') {
+    get(subroute) {
         return this._registerHandler('get', subroute)
     }
 
-    post(subroute = '') {
+    post(subroute) {
         return this._registerHandler('post', subroute)
     }
 
-    put(subroute = '') {
+    put(subroute) {
         return this._registerHandler('put', subroute)
     }
 

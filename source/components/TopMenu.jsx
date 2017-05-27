@@ -1,7 +1,7 @@
 import React from 'react'
-import styled, {css} from 'styled-components'
-import {Link} from 'react-router-dom'
-import {Icon} from './common'
+import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
+import { Icon } from '../elements/icons.jsx'
 
 const Menu = styled.div`
     position: fixed;

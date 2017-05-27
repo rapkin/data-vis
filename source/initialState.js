@@ -1,4 +1,4 @@
-import {initial as auth} from './reducers/auth'
+import { initial as auth } from './reducers/auth'
 
 export default () => ({
     auth
