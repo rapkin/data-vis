@@ -75,7 +75,7 @@ export const SendButton = styled.button`
     font-size: 20px;
     padding: 10px 20px;
     width: 100%;
-    margin-top: 15px;
+    margin-top: 20px;
     border-radius: 5px;
     cursor: pointer;
 

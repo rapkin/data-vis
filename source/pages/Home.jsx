@@ -6,7 +6,7 @@ import { Mapbox as config } from '../../config.json'
 Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images/' // fixme
 const [cx, cy] = config.center
 
-class Home extends React.Component {
+export default class Home extends React.Component {
     render() {
         return (
             <Map center={config.center} zoom={config.zoom}>
@@ -22,5 +22,3 @@ class Home extends React.Component {
         )
     }
 }
-
-export default Home

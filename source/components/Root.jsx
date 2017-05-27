@@ -15,6 +15,11 @@ const rightMenuSection = [
         link: '/login/',
         name: 'Sign in',
         icon: 'sign-in'
+    },
+    {
+        link: '/registration/',
+        name: 'Sign up',
+        icon: 'user-plus'
     }
 ]
 
