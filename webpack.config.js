@@ -41,10 +41,6 @@ var config = {
                 options: {
                     limit: 100
                 }
-            },
-            {
-                test: /\.json$/,
-                loader: 'json'
             }
         ]
     },

@@ -13,7 +13,7 @@ render((
     <Provider store={store}>
         <Router history={history}>
             <Root>
-                <Route exact path='/' component={Home} />
+                <Route exact path='/' component={Login} />
                 <Route path='/login' component={Login} />
             </Root>
         </Router>

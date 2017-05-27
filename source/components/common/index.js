@@ -1,9 +1,9 @@
 import Error from './Error.jsx'
 import Loading from './Loading.jsx'
-import FA from './FA.jsx'
+import Icon from './Icon.jsx'
 
 export {
     Loading,
     Error,
-    FA
+    Icon
 }

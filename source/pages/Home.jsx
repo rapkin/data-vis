@@ -1,20 +1,23 @@
 import React from 'react'
 import Leaflet from 'leaflet'
-import {Map, Marker, Popup, TileLayer} from 'react-leaflet'
-Leaflet.Icon.Default.imagePath =
-  '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images/' // fixme
+import {Map, Marker, Tooltip, TileLayer, Rectangle} from 'react-leaflet'
+import {Mapbox as config} from '../../config.json'
 
-const position = [51.505, -0.09]
+Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images/' // fixme
+const [cx, cy] = config.center
+
 class Home extends React.Component {
     render() {
         return (
-            <Map center={position} zoom={13}>
+            <Map center={config.center} zoom={config.zoom}>
                 <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' />
-                <Marker position={position}>
-                    <Popup>
-                        <span>A pretty CSS3 popup.<br/>Easily customizable.</span>
-                    </Popup>
+                <Marker position={config.center}>
+                    <Tooltip>
+                        <span>test</span>
+                    </Tooltip>
                 </Marker>
+
+                <Rectangle bounds={[[cx, cy], [cx+2, cy+2]]} />
             </Map>
         )
     }

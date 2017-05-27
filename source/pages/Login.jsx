@@ -1,2 +1,12 @@
 import LoginForm from '../components/LoginForm.jsx'
-export default LoginForm
+import React, { Component } from 'react'
+import {login} from '../api/auth'
+
+export default class Login extends Component {
+    render() {
+        return (
+            <LoginForm onSubmit={login} />
+        )
+    }
+}
+

@@ -1,9 +1,10 @@
 import React from 'react'
+import Wrapper from './Message.jsx'
 
 class Loading extends React.Component {
     render() {
         const {text = 'Loading. Please wait', loading} = this.props
-        return (loading ? <p className='loading'>{text}</p> : this.props.children || null)
+        return (loading ? <Wrapper>{text}</Wrapper> : this.props.children || null)
     }
 }
 
