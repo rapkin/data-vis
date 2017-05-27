@@ -41,6 +41,15 @@ def create():
     conn.commit()
     print("Created tables successfully")
 
+def save(querySql):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute(querySql)
+    mes = cursor.statusmessage
+    cursor.close()
+    conn.commit()
+    return mes
+
 
 def query(querySql):
     conn = get_db()
@@ -58,7 +67,7 @@ def import_data():
 
 def insert_data(data):
     conn = get_db()
-    table_queue = ['cities','data_sets', 'data_entries']
+    table_queue = ['users', 'cities','data_sets', 'data_entries']
 
     for table_name in table_queue:
         table_fields = data[table_name][0].keys()
@@ -82,4 +91,5 @@ def insert_data(data):
         )
         cursor = conn.cursor()
         cursor.execute(sql_string, fields_value_flat)
+        cursor.close()
         conn.commit()

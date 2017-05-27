@@ -1,0 +1,5 @@
+{% extends "auth/layout.html" %}
+{% block body %}
+<a href="{{ url_for('auth.login') }}">log in</a>
+<a href="{{ url_for('auth.logup') }}">log up</a>
+{% endblock %}

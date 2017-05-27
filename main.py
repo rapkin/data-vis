@@ -2,6 +2,7 @@
 
 from flask import Flask, send_from_directory
 from subapps.api.index import api
+from subapps.auth.index import auth
 from helpers.database import get_db
 from helpers.config import load_cfg
 
@@ -10,6 +11,8 @@ app = Flask(__name__)
 
 #/api/ routes
 app.register_blueprint(api)
+#/auth/ routes
+app.register_blueprint(auth)
 
 
 @app.route('/static/<path:path>')
