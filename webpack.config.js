@@ -36,12 +36,15 @@ var config = {
                 loader: "style-loader!css-loader"
             },
             {
-                test: /\.json$/,
-                loader: 'json'
+                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 100
+                }
             },
             {
-                test: /\.(eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)?/,
-                loader: 'url-loader?limit=10000&name=fonts/[hash].[ext]'
+                test: /\.json$/,
+                loader: 'json'
             }
         ]
     },
