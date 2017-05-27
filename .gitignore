@@ -1,6 +1,7 @@
-static/
+dist/
 node_modules/
 bower_components/
 *.pyc
 __pycache__
 npm-debug.log
+.DS_Store
