@@ -1,7 +1,10 @@
 {
     "Flask": {
         "DEBUG": 1,
-        "PORT": 3333
+        "PORT": 3333,
+        "SECRET": "heh",
+        "ENCRYPT_ALGO": "HS384",
+        "token_life": "00:25:02"
     },
     "Database": {
         "database": "data-vis",

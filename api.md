@@ -8,8 +8,8 @@
 
 ## Отримання данних
 
-### GET /config/
-Віддає MapBox config з config.json
+### GET api/config/
+Віддає Map config з config.json
 
 __Response:__
 
@@ -20,21 +20,28 @@ __Response:__
     "zoom": 6
 }
 ```
-### api/
+
+### error BadRequest
+__Response:__
+
+```json
+{   
+    "message": "..." ,
+}
+```
 
 ### header
 Авторизуе користувача, обов'язкове поле для роботи з api/
 
 Authorization: <token>
 
-### GET cities/
+### GET api/locations/
 Віддає список всіх міст 
 
 __Response:__
 
 ```json
 {   
-    "message": "..." ,
     "list": [
         {
             "id": 1,
@@ -47,10 +54,10 @@ __Response:__
 }
 ```
 
-### GET cities/?id=...
+### GET api/locations/?id=...
 Віддає список міст з заданим id
 
-### POST cities/
+### POST api/locations/
 Оновлюе місто задане через id
 
 __Request:__
@@ -69,8 +76,8 @@ __Response:__
 }
 ```
 
-### DELETE cities/
-Видаляе місто задане через id
+### DELETE api/locations/
+Видаляе міста задане через id
 
 __Request:__
 ```json
@@ -87,7 +94,7 @@ __Response:__
 }
 ```
 
-### PUT cities/
+### PUT api/locations/
 Зберігає місто усі поля обов'язкові
 
 __Request:__
@@ -107,33 +114,13 @@ __Response:__
 }
 ```
 
-
-### GET data_sets/
-Віддає список всіх наборів данних
-
-__Response:__
-
-```json
-{
-    "message": "..." ,
-    "list": [
-        {
-            "id": 1,
-            "name": "Народжуваність"
-        },
-        {"...."}
-    ]
-}
-```
-
-### GET data_sets/
+### GET api/data_sets/
 Віддає список всіх наборів данних 
 
 __Response:__
 
 ```json
-{   
-    "message": "..." ,
+{
     "list": [
         {
             "id": 1,
@@ -144,10 +131,24 @@ __Response:__
 }
 ```
 
-### GET data_sets/?id=...
+### GET api/data_sets/?id=...
 Віддає список наборів данних з заданим id
 
-### POST data_sets/
+__Response:__
+
+```json
+{
+    "list": [
+        {
+            "id": 1,
+            "name": "...",
+        },
+        {"...."}
+    ]
+}
+```
+
+### POST api/data_sets/
 Оновлюе набір данних заданий через id
 
 __Request:__
@@ -166,8 +167,8 @@ __Response:__
 }
 ```
 
-### DELETE data_sets/
-Видаляе набір данних задане через id
+### DELETE api/data_sets/
+Видаляе набір данних заданих через id
 
 __Request:__
 ```json
@@ -184,7 +185,7 @@ __Response:__
 }
 ```
 
-### PUT data_sets/
+### PUT api/data_sets/
 Зберігає набір данних усі поля обов'язкові
 
 __Request:__
@@ -202,39 +203,38 @@ __Response:__
 }
 ```
 
-### GET data_entries/
+### GET api/data_entries/
 Віддає список всіх данних 
 
 __Response:__
 
 ```json
-{   
-    "message": "..." ,
+{
     "list": [
         {
             "id": 1,
             "value": 42,
             "time": 1458421488,
             "set_id": 1,
-            "city_id": 1
+            "location_id": 1
         },
         {"...."}
     ]
 }
 ```
 
-### GET data_entries/?id=...
+### GET api/data_entries/?id=...
 Віддає список данних з заданим id.
 
-### GET data_entries/?<filter>=...&...
+### GET api/data_entries/?<filter>=...&...
 Список фільтрів:
  * `sets` - список ID наборів данних
- * `cities` - список ID міст
+ * `locations` - список ID міст
  * `after` / `before` - верхня / нижня часова межа вибірки
 Віддає список данних з заданим фільтром.
 Якщо задано id=... то GET data_entries/?id=...
 
-### POST data_entries/
+### POST api/data_entries/
 Оновлюе данні задані через id
 
 __Request:__
@@ -253,7 +253,7 @@ __Response:__
 }
 ```
 
-### DELETE data_entries/
+### DELETE api/data_entries/
 Видаляе данні задані через id
 
 __Request:__
@@ -271,7 +271,7 @@ __Response:__
 }
 ```
 
-### PUT data_entries/
+### PUT api/data_entries/
 Зберігає набір данних усі поля обов'язкові
 
 __Request:__
@@ -281,7 +281,7 @@ __Request:__
     "value": 42,
     "time": 1458421488,
     "set_id": 1,
-    "city_id": 1
+    "location_id": 1
 }
 ```
 
@@ -294,15 +294,14 @@ __Response:__
 ```
 
 ### GET api/search/?q=...
-Виконуе пошук по полю name н таблицях coties, data_sets
+Виконуе пошук по полю name у таблицях locations, data_sets
 
 __Response:__
 
 ```json
-{   
-    "message": "..." ,
+{
     "list": {
-        "cities": [
+        "locations": [
             {
                 "id": 1,
                 "name": "Київ",
@@ -317,7 +316,7 @@ __Response:__
                 "value": 42,
                 "time": 1458421488,
                 "set_id": 1,
-                "city_id": 1
+                "location_id": 1
             },
             {"...."}
         ]
@@ -325,10 +324,7 @@ __Response:__
 }
 ```
 
-
-### auth/
-
-### POST login/
+### POST api/auth/login/
 
 __Request:__
 ```json
@@ -340,12 +336,11 @@ __Request:__
 __Response:__
 
 ```json
-{   
-    "message": "..." ,
+{
     "token": "..."
 }
 ```
-### POST logup/
+### POST api/auth/logup/
 
 __Request:__
 ```json
@@ -358,12 +353,14 @@ __Request:__
 __Response:__
 
 ```json
-{   
-    "message": "..." ,
+{
+    "username": "..." ,
+    "password": "...",
+    "token": "..." 
 }
 ```
 
-### GET logup/
+### GET api/auth/logup/
 
 __Response:__
 
@@ -373,7 +370,7 @@ __Response:__
 }
 ```
 
-### GET token/
+### GET api/auth/token/
 Віддає статус токену
 
 __Response:__
@@ -384,6 +381,5 @@ __Response:__
     "is_admin": "..." ,
     "user_id": "..." ,
     "created": "..."
-
 }
 ```

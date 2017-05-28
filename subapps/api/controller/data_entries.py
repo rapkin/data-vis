@@ -25,5 +25,5 @@ class DataEntriesAPI(GenericControler):
         else:            
             data = self.model.get_all(user_id)
 
-        status, values = data
-        return jsonify({"list": values, "message": status})
+        values = data
+        return jsonify({"list": values})

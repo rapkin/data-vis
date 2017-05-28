@@ -2,13 +2,14 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username varchar(64) NOT NULL,
     password varchar(64) NOT NULL,
-    is_admin boolean NOT NULL
+    is_admin boolean 
 );
 CREATE TABLE tokens (
     id SERIAL PRIMARY KEY,
-    token varchar(64) NOT NULL,
+    token varchar(256) NOT NULL,
     created varchar(64) NOT NULL,
     user_id integer NOT NULL,
+    time timestamp,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 CREATE TABLE locations (

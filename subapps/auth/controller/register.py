@@ -7,15 +7,13 @@ from helpers.erorrs import BadRequest
 class RegisterControler(MethodView):
 
     def put(self):
-        user = request.json.get("username")
-        pas = request.json.get("password")
+        json = request.get_json()
+        user = json.get("username")
+        pas = json.get("password")
 
         if user is None or pas is None:
             raise BadRequest("username or password not provided")
 
-        username = "'" + str(user) + "'"
-        password = "'" + str(pas) + "'"
-
-        data = model.register(username, password)
-        status = data[0]        
-        return jsonify({"message": status})
+        token = model.register(user, pas)
+        json.update({"token": token})
+        return jsonify(json)

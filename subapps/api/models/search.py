@@ -20,4 +20,4 @@ def get_by_name(user_id, name, tables):
         mes += res.statusmessage + "   "
         data.update({item["table"]:res.fetchall()})
 
-    return [mes, data]
+    return data
