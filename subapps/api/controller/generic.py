@@ -18,8 +18,8 @@ class GenericControler(MethodView):
         else:
             data = self.model.get_all(user_id)
 
-        status, values = data
-        return jsonify({"list": values, "message": status})
+        values = data
+        return jsonify({"list": values})
 
     def post(self):
         """Old
@@ -42,8 +42,7 @@ class GenericControler(MethodView):
         json = request.get_json()
         user_id = check_token()
 
-        data = self.model.update_by_id(json, user_id)
-        status = data[0]
+        status = self.model.update_by_id(json, user_id)
         return jsonify({"message": status})
 
     
@@ -56,8 +55,7 @@ class GenericControler(MethodView):
 
         ids = [str(id) for id in json["ids"]]
 
-        data = self.model.delete_by_id(ids, user_id)
-        status = data[0]
+        status = self.model.delete_by_id(ids, user_id)
         return jsonify({"message": status})
         
     
@@ -74,6 +72,5 @@ class GenericControler(MethodView):
         json = request.get_json()
         user_id = check_token()
 
-        data = self.model.insert_one(json, user_id)
-        status = data[0]
+        status = self.model.insert_one(json, user_id)
         return jsonify({"message": status})

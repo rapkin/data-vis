@@ -4,7 +4,7 @@ from helpers.erorrs import BadRequest
 from flask import request
 
 def create_token(salt):
-    return hashlib.md5(salt.encode()).hexdigest()
+    return hashlib.sha256(salt.encode()).hexdigest()
 
 
 def insert_token(user_id, token):

@@ -24,4 +24,4 @@ def login(user_data):
     else:
         raise BadRequest("No such user")
 
-    return [mes, token]
+    return token

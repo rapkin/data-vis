@@ -9,4 +9,4 @@ def logout(user_id):
     res = db.query(delete_query)
     mes = res.statusmessage
     
-    return mes
+    return "Logout 6s"

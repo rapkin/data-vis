@@ -16,6 +16,6 @@ class LoginControler(MethodView):
 
         user_data = [str(user), str(pas)]
 
-        mes, token = model.login(user_data)
+        token = model.login(user_data)
 
-        return jsonify({"message": mes, "token": token})
+        return jsonify({"token": token})

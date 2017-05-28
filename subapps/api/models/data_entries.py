@@ -28,4 +28,4 @@ class DataEntriesModel(GenericModel):
         sql_query += " AND user_id="+str(user_id)
         res = db.query(sql_query)
 
-        return [res.statusmessage, res.fetchall()]
+        return res.fetchall()
