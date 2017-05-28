@@ -1,4 +1,3 @@
-
 def load_cfg(path):
     from flask import json, current_app
 

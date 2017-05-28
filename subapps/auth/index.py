@@ -13,7 +13,7 @@ auth.add_url_rule('/auth/login/',
 logup_api = logup.LogupControler.as_view("logup")
 auth.add_url_rule('/auth/logup/',
                     view_func=logup_api,
-                    methods=['POST'])
+                    methods=['PUT'])
 
 users_api = users.UsersControler.as_view("users")
 auth.add_url_rule('/auth/users/',
