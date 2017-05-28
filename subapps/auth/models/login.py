@@ -1,7 +1,7 @@
 from helpers import database as db
 from helpers.auth import create_token, insert_token
 from helpers.erorrs import BadRequest
-from datetime import datetime
+from helpers import time
 
 
 def login(user_data):
@@ -16,7 +16,7 @@ def login(user_data):
     if mes[-1] == "1":
         data = res.fetchone()
         if pas == data["password"]:
-            time = datetime.now().isoformat(" ")
+            time = time.now()
             salt = {
                 "user_id": data["id"],
                 "created": time,

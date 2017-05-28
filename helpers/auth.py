@@ -11,6 +11,11 @@ def create_token(data):
     token = jwt.encode(data, secret, current_app.config["ENCRYPT_ALGO"])
     return token.decode()
 
+def decrypt(token):
+    secret = current_app.config["SECRET"]
+    data = jwt.decode(token, secret)
+    return data
+
 
 def insert_token(user_id, token, token_time):
     token_fields = ["token", "created", "user_id"]

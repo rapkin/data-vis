@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template
 from subapps.auth.controller import login, register, users, logout
-from helpers.auth import check_token
-from flask import jsonify
+from helpers.auth import get_token, check_token
+import jwt
+from flask import jsonify, current_app
 
 auth = Blueprint('auth', "auth")
 
@@ -27,5 +28,9 @@ auth.add_url_rule('/api/auth/logout/',
 
 @auth.route('/api/auth/token/')
 def token_status():
+    # token = get_token()
+    # data = jwt.decode(token, current_app.config["SECRET"])
+
     data = check_token(status=True)
+
     return jsonify(data)
