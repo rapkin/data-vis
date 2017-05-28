@@ -1,9 +1,9 @@
 from flask.views import MethodView
 from flask import jsonify, request, render_template
-from subapps.auth.models import logup as model
+from subapps.auth.models import register as model
 
 
-class LogupControler(MethodView):
+class RegisterControler(MethodView):
 
     def put(self):
         user = request.json.get("username")
@@ -15,6 +15,6 @@ class LogupControler(MethodView):
         username = "'" + str(user) + "'"
         password = "'" + str(pas) + "'"
 
-        data = model.logup(username, password)
+        data = model.register(username, password)
         status = data[0]        
         return jsonify({"message": status})
