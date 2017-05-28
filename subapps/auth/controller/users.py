@@ -10,4 +10,4 @@ class UsersControler(MethodView):
         check_token()
 
         data = model.get_all()
-        return render_template("auth/users.html", data=data)
+        return jsonify(data)
