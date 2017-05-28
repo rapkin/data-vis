@@ -19,8 +19,10 @@ def send_dist(path):
     app.logger.error(path)
     return send_from_directory('dist', path)
 
-@app.route('/')
-def root():
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def root(path):
+    print(path)
     return send_from_directory('dist', 'index.html')
 
 @app.errorhandler(BadRequest)
