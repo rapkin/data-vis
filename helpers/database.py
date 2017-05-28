@@ -53,9 +53,8 @@ def save(querySql):
         print("\n\n"+cursor.statusmessage)
         cursor.close()
         raise BadRequest("Iternal db save error")
-    else:
-        cursor.close()
-        conn.commit()
+    cursor.close()
+    conn.commit()
     return mes
 
 

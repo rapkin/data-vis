@@ -2,7 +2,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username varchar(64) NOT NULL,
     password varchar(64) NOT NULL,
-    is_admin boolean NOT NULL
+    is_admin boolean 
 );
 CREATE TABLE tokens (
     id SERIAL PRIMARY KEY,
