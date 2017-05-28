@@ -3,7 +3,7 @@ import psycopg2.extras
 import json
 from os import path
 from flask import current_app, g
-from werkzeug.exceptions import BadRequest
+from helpers.erorrs import BadRequest
 root = path.dirname(path.dirname(path.realpath(__file__)))
 
 def get_db():
@@ -81,7 +81,7 @@ def import_data():
 
 def insert_data(data):
     conn = get_db()
-    table_queue = ['users', 'cities','data_sets', 'data_entries']
+    table_queue = ['users', 'locations','data_sets', 'data_entries']
 
     for table_name in table_queue:
         table_fields = data[table_name][0].keys()
