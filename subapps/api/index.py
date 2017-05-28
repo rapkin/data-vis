@@ -6,7 +6,7 @@ api = Blueprint('api', "api")
 
 @api.route('/api/config/')
 def send_config():
-    cfg = current_app.config["MAPBOX"]
+    cfg = current_app.config["MAP"]
     return jsonify(cfg)
 
 locations_api = locations.LocationsAPI.as_view("locations_api")
