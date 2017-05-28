@@ -21,6 +21,7 @@ const Hero = styled.div`
 
     h1 {
         font-size: 73px;
+        margin: 0;
     }
 
     h2 {

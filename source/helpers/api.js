@@ -20,7 +20,7 @@ export default class Api {
         if (this.root) segments.push(this.root)
         if (subroute) segments.push(subroute)
 
-        const handler = createHandler('post', `/${segments.join('/')}/`)
+        const handler = createHandler(type, `/${segments.join('/')}/`)
         this.routes[subroute] = this.routes[subroute] || handler
         this.routes[subroute][type] = handler
         return handler
