@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form'
-import { StyledInput, Form, FormTitle, SendButton } from '../elements/forms.jsx'
+import { StyledInput, Form, FormTitle } from '../elements/forms.jsx'
 import { Error } from '../elements/messages.jsx'
 import { Icon } from '../elements/icons.jsx'
+import { SendButton } from '../elements/buttons.jsx'
 import { loginForm as validate } from '../helpers/validation'
 
 @reduxForm({form: 'loginForm', validate})

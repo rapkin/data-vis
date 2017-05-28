@@ -10,6 +10,7 @@ const Menu = styled.div`
     display: flex;
     background: #0099cc;
     justify-content: space-between;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
 
     > div {
         display: flex;

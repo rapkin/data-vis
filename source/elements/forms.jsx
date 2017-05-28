@@ -12,6 +12,11 @@ export const Form = styled.form`
     max-width: 500px;
     background: white;
     border-radius: 5px;
+
+    button {
+        margin-top: 20px;
+        width: 100%;
+    }
 `
 
 export const FormTitle = styled.h1`
@@ -64,29 +69,6 @@ export const Input = styled.input`
     border: none;
     border-bottom: solid 2px ${getInputColor};
     padding: 10px 15px;
-`
-
-export const SendButton = styled.button`
-    background: ${colors.green};
-    border: none;
-    outline: none;
-    color: white;
-    text-transform: uppercase;
-    font-size: 20px;
-    padding: 10px 20px;
-    width: 100%;
-    margin-top: 20px;
-    border-radius: 5px;
-    cursor: pointer;
-
-    &:hover {
-        background: ${colors.greenDarken};
-    }
-
-    &:disabled, &[disabled=disabled] {
-        opacity: 0.7;
-        background: ${colors.grey};
-    }
 `
 
 export const StyledInput = ({input, label, type, meta: {touched, error, active}}) => {
