@@ -16,10 +16,11 @@ def register(user, pas):
     if mes[-1] != "0":
         raise BadRequest("username already used")
 
-    fields = ["username", "password"]
+    fields = ["id", "username", "password"]
 
-    field_str = "("+', '.join(fields)+") VALUES "
-    val_str = "("+', '.join([username, password])+")"
+    field_str = " ("+', '.join(fields)+") VALUES "
+    val_str = "(" + "(SELECT MAX(id) from users)+1, "
+    val_str += ', '.join([username, password])+")"
 
     res = db.save(sql_insert_query+field_str+val_str)
     token = login.login([user, pas])
