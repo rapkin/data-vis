@@ -8,7 +8,7 @@ import jwt
 
 def create_token(data):
     secret = current_app.config["SECRET"]
-    token = jwt.encode(data, secret, algorithm="HS256")
+    token = jwt.encode(data, secret, current_app.config["ENCRYPT_ALGO"])
     return token.decode()
 
 
