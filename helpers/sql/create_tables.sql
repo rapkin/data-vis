@@ -11,7 +11,7 @@ CREATE TABLE tokens (
     user_id integer NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
-CREATE TABLE cities (
+CREATE TABLE locations (
     id SERIAL PRIMARY KEY,
     name varchar(64) NOT NULL,
     lat float NOT NULL,
@@ -30,12 +30,12 @@ CREATE TABLE data_sets (
 CREATE TABLE data_entries (
     id SERIAL PRIMARY KEY,
     set_id integer NOT NULL,
-    city_id integer NOT NULL,
+    location_id integer NOT NULL,
     value varchar(64) NULL,
     time int NOT NULL,
     user_id integer NOT NULL,
     FOREIGN KEY (set_id) REFERENCES data_sets(id) ON DELETE CASCADE,
-    FOREIGN KEY (city_id) REFERENCES cities(id) ON DELETE CASCADE,
+    FOREIGN KEY (location_id) REFERENCES locations(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 

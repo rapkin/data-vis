@@ -12,7 +12,7 @@ class SearchAPI(MethodView):
         table = request.args.get('table')
         user_id = check_token()
 
-        tables = ["cities", "data_sets"]
+        tables = ["locations", "data_sets"]
 
         if q is None:
             raise BadRequest("Url adrg q is not provided") 	
@@ -24,7 +24,7 @@ class SearchAPI(MethodView):
         		raise BadRequest("No such table")
         	data = model.get_by_name(user_id, q, table)
         else:
-        	tables = ["cities", "data_sets"]
+        	tables = ["locations", "data_sets"]
         	data = model.get_by_name(user_id, q, tables)    
 
         status, values = data

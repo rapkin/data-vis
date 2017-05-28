@@ -67,7 +67,7 @@ def import_data():
 
 def insert_data(data):
     conn = get_db()
-    table_queue = ['users', 'cities','data_sets', 'data_entries']
+    table_queue = ['users', 'locations','data_sets', 'data_entries']
 
     for table_name in table_queue:
         table_fields = data[table_name][0].keys()
