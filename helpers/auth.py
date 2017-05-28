@@ -1,6 +1,6 @@
 import hashlib
 from helpers import database as db
-from werkzeug.exceptions import BadRequest
+from helpers.erorrs import BadRequest
 from flask import request
 
 def create_token(salt):
@@ -34,7 +34,7 @@ def insert_token(user_id, token):
     return [mes, token_time, token]
 
 def get_token():
-    token =    request.headers.get('Authorization')
+    token = request.headers.get('Authorization')
 
     if token is None:
         raise BadRequest("Token not provided in header Authorization")
