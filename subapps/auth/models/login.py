@@ -1,6 +1,6 @@
 from helpers import database as db
 from helpers.auth import create_token, insert_token
-from werkzeug.exceptions import BadRequest
+from helpers.erorrs import BadRequest
 
 table = "users"
 

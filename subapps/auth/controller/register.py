@@ -1,6 +1,7 @@
 from flask.views import MethodView
 from flask import jsonify, request, render_template
 from subapps.auth.models import register as model
+from helpers.erorrs import BadRequest
 
 
 class RegisterControler(MethodView):

@@ -1,6 +1,6 @@
 from flask.views import MethodView
 from flask import jsonify, request
-from werkzeug.exceptions import BadRequest
+from helpers.erorrs import BadRequest
 from subapps.auth.models import login as model
 
 

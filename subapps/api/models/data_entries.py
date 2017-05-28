@@ -3,7 +3,7 @@ from helpers import database as db
 
 class DataEntriesModel(GenericModel):
     table = "data_entries"
-    fields = ["city_id", "set_id", "time", "value", "user_id"]
+    fields = ["location_id", "set_id", "time", "value", "user_id"]
 
     def get_by_set_city_time(self, filtr, user_id):
         sql_query = 'SELECT * FROM ' + self.table
@@ -14,8 +14,8 @@ class DataEntriesModel(GenericModel):
 
             if 'sets' in filter_keys:
                 sql_filter_list.append('set_id IN ({})'.format(",".join(str(item) for item in filtr['sets'])))
-            if 'cities' in filter_keys:
-                sql_filter_list.append('city_id IN ({})'.format(",".join(str(item) for item in filtr['cities'])))
+            if 'locations' in filter_keys:
+                sql_filter_list.append('location_id IN ({})'.format(",".join(str(item) for item in filtr['locations'])))
             if 'after' in filter_keys:
                 sql_filter_list.append('time > {}'.format(filtr['after']))
             if 'before' in filter_keys:

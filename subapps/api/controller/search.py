@@ -2,7 +2,7 @@ from flask.views import MethodView
 from flask import jsonify, request
 from helpers.auth import check_token
 from subapps.api.models import search as model
-from werkzeug.exceptions import BadRequest
+from helpers.erorrs import BadRequest
 
 
 class SearchAPI(MethodView):
