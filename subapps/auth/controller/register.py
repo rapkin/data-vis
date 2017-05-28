@@ -17,5 +17,5 @@ class RegisterControler(MethodView):
         password = "'" + str(pas) + "'"
 
         data = model.register(username, password)
-        status = data[0]        
+        status = data[0]
         return jsonify({"message": status})
