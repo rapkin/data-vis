@@ -29,8 +29,7 @@ class GenericModel():
         update_query = sql.update(
             self.table,
             str(user_id),
-            data,
-            self.fields)
+            data)
 
         mes = db.save(update_query)
         return mes

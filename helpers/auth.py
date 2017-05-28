@@ -1,27 +1,36 @@
 import hashlib
 from helpers import database as db
 from helpers.erorrs import BadRequest
-from flask import request
-from datetime import datetime
-
-def create_token(salt):
-    return hashlib.sha256(salt.encode()).hexdigest()
+from helpers import sql
+from flask import request, current_app
+import jwt
 
 
-def insert_token(user_id, token):
+def create_token(data):
+    secret = current_app.config["SECRET"]
+    token = jwt.encode(data, secret, algorithm="HS256")
+    return token.decode()
+
+
+def insert_token(user_id, token, token_time):
     token_fields = ["token", "created", "user_id"]
-    token_time = datetime.now().isoformat(" ")
 
-    select_query = "SELECT token, created FROM tokens WHERE"
+    select_query = "SELECT id FROM tokens WHERE"
     select_query += " user_id="+str(user_id)
 
     res = db.query(select_query)
     mes = res.statusmessage
-    if mes[-1] != "0":
+    if mes[-1] == "1":
         data = res.fetchone()
-        token_time = data["created"]
-        token_old = data["token"]
-        return [mes + "  exist", token_time, token_old]
+        token_id = data["id"]
+        upd_vals = {
+            "id": token_id,
+            "token": token,
+            "created": token_time
+        }
+        upd_q = sql.update("tokens", user_id, upd_vals)
+        mes += db.save(upd_q)
+        return token
 
     insert_query = 'INSERT INTO tokens'
 
@@ -32,7 +41,7 @@ def insert_token(user_id, token):
 
     mes = db.save(insert_query)
 
-    return [mes, token_time, token]
+    return token
 
 def get_token():
     token = request.headers.get('Authorization')

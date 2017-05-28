@@ -6,7 +6,7 @@ CREATE TABLE users (
 );
 CREATE TABLE tokens (
     id SERIAL PRIMARY KEY,
-    token varchar(64) NOT NULL,
+    token varchar(256) NOT NULL,
     created varchar(64) NOT NULL,
     user_id integer NOT NULL,
     time timestamp,

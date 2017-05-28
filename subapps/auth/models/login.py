@@ -1,6 +1,7 @@
 from helpers import database as db
 from helpers.auth import create_token, insert_token
 from helpers.erorrs import BadRequest
+from datetime import datetime
 
 
 def login(user_data):
@@ -15,9 +16,15 @@ def login(user_data):
     if mes[-1] == "1":
         data = res.fetchone()
         if pas == data["password"]:
-            token = create_token(user)
-            upd_mes, time, token = insert_token(data["id"], token)
-            mes += "   " + upd_mes + "   " +str(time)
+            time = datetime.now().isoformat(" ")
+            salt = {
+                "user_id": data["id"],
+                "created": time,
+                "password": pas
+
+            }
+            token = create_token(salt)
+            token = insert_token(data["id"], token, time)
         else:
             raise BadRequest("Wrong password")
     else:

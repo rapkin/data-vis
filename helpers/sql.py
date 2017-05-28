@@ -16,13 +16,13 @@ def select(table, user_id, constr='', fields="*"):
 
     return select_query
 
-def update(table, user_id, data, fields):
+def update(table, user_id, data):
     update_query = 'UPDATE ' + table
     update_query += " SET "
 
     pairs = []
     for key in data:
-        if key in fields:
+        if key != "id":
             pairs.append("{0}='{1}'".format(key, str(data.get(key))))
 
     update_query += ', '.join(pairs)
