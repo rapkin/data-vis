@@ -16,15 +16,15 @@ def login(user_data):
     if mes[-1] == "1":
         data = res.fetchone()
         if pas == data["password"]:
-            time = time.now()
+            token_time = time.now()
             salt = {
                 "user_id": data["id"],
-                "created": time,
+                "created": token_time,
                 "password": pas
 
             }
             token = create_token(salt)
-            token = insert_token(data["id"], token, time)
+            token = insert_token(data["id"], token, token_time)
         else:
             raise BadRequest("Wrong password")
     else:
