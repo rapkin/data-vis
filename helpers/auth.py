@@ -2,6 +2,7 @@ import hashlib
 from helpers import database as db
 from helpers.erorrs import BadRequest
 from flask import request
+from datetime import datetime
 
 def create_token(salt):
     return hashlib.sha256(salt.encode()).hexdigest()
@@ -9,7 +10,7 @@ def create_token(salt):
 
 def insert_token(user_id, token):
     token_fields = ["token", "created", "user_id"]
-    token_time = "100500"
+    token_time = datetime.now().isoformat(" ")
 
     select_query = "SELECT token, created FROM tokens WHERE"
     select_query += " user_id="+str(user_id)

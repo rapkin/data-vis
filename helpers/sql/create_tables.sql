@@ -9,6 +9,7 @@ CREATE TABLE tokens (
     token varchar(64) NOT NULL,
     created varchar(64) NOT NULL,
     user_id integer NOT NULL,
+    time timestamp,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 CREATE TABLE locations (
