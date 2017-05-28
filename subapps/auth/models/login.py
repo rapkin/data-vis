@@ -7,22 +7,21 @@ table = "users"
 def login(user_data):
     sql_select_query = 'SELECT id, password FROM ' + table
 
-    user, pas = user_data
-    
-    user = "'"+user+"'"
-    constrain = " WHERE username=" + user
+	user, pas = user_data
 
-    res = db.query(sql_select_query + constrain)
-    mes = res.statusmessage
-    if mes[-1] == "1":
-        data = res.fetchone()
-        if pas == data["password"]:
-            token = create_token(user)
-            upd_mes, time, token = insert_token(data["id"], token)
-            mes += "   " + upd_mes + "   " +str(time)
-        else:
-            raise BadRequest("Wrong password")
-    else:
-        raise BadRequest("No such user")
+	constrain = " WHERE username='"+user+"'"
+
+	res = db.query(sql_select_query + constrain)
+	mes = res.statusmessage
+	if mes[-1] == "1":
+		data = res.fetchone()
+		if pas == data["password"]:
+			token = create_token(user)
+			upd_mes, time, token = insert_token(data["id"], token)
+			mes += "   " + upd_mes + "   " +str(time)
+		else:
+			raise BadRequest("Wrong password")
+	else:
+		raise BadRequest("No such user")
 
     return [mes, token]

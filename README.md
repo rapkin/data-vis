@@ -25,5 +25,5 @@
 
 ## Build
 
-* `gulp` - build once
-* `gulp dev` - build and watch (dev mode)
+* `npm run build` - build once
+* `npm run dev` - build and watch (dev mode)
