@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Leaflet from 'leaflet'
 import { Map, Marker, Tooltip, TileLayer, Rectangle } from 'react-leaflet'
-import { Mapbox as config } from '../../config.json'
+import { Map as config } from '../../config.json'
 import { authRequired } from '../helpers/auth.jsx'
 
 Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images/' // fixme
