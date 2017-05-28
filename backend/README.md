@@ -15,7 +15,11 @@
 
 ```json
 {
-    "port": 5000, // порт на якому стартує сервер
-    "mongo": "mongodb://localhost/data-vis" // з'єднання до MongoDB
+    "port": 5000,
+    "mongo": "mongodb://localhost/data-vis"
 }
 ```
+
+Де:
+* __port__ - порт на якому стартує сервер
+* __mongo__ - з'єднання до MongoDB

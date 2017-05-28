@@ -3,7 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import api from './api'
-import {Flask as config} from './config.json'
+import config from './config.json'
 
 mongoose.Promise = Promise
 mongoose.connect(config.mongo || 'mongodb://localhost/data-vis')
