@@ -4,7 +4,7 @@ import {
 } from '../constants'
 
 export const initial = {
-    token: null
+    token: sessionStorage.getItem('authToken') || null
 }
 
 export default (state = initial, action) => {
