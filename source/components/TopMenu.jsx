@@ -27,7 +27,7 @@ const menuItem = css`
 
     .fa {
         font-size: 20px;
-        margin-right: 5px;
+        margin-right: 10px;
     }
 
     span {

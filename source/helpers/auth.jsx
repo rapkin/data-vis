@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import colors from '../colors'
@@ -34,9 +34,9 @@ const Hero = styled.div`
     }
 `
 
-const Authorize = ({ dispatch }) => {
-    const signIn = () => dispatch(push('/login'))
-    const signUp = () => dispatch(push('/registration'))
+const Authorize = ({ changeLocation }) => {
+    const signIn = () => changeLocation('/login')
+    const signUp = () => changeLocation('/registration')
 
     return (
         <Hero>
@@ -51,11 +51,12 @@ const Authorize = ({ dispatch }) => {
     )
 }
 
+@withRouter
 @connect((state) => ({authToken: state.auth.token}))
 export class Auth extends Component {
     render() {
-        const {authToken, children, dispatch} = this.props
-        return authToken ? children : <Authorize dispatch={dispatch} />
+        const {authToken, children, history: {push}} = this.props
+        return authToken ? children : <Authorize changeLocation={push} />
     }
 }
 
