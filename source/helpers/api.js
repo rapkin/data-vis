@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { SubmissionError } from 'redux-form'
+import { getToken } from './auth.jsx'
 
-const createHandler = (type, url) => (data) =>
-    axios[type](url, data)
+const createHandler = (method, url) => (data) =>
+    axios({method, url, data, headers: {Authorization: getToken()}})
         .catch(err => {
             const message = err.response && err.response.data.error
             throw new SubmissionError({_error: message || err.toString()})
@@ -15,15 +16,15 @@ export default class Api {
         this.routes = {}
     }
 
-    _registerHandler(type, subroute) {
+    _registerHandler(method, subroute) {
         const segments = []
         if (this.version) segments.push(this.version)
         if (this.root) segments.push(this.root)
         if (subroute) segments.push(subroute)
 
-        const handler = createHandler(type, `/${segments.join('/')}/`)
+        const handler = createHandler(method, `/${segments.join('/')}/`)
         this.routes[subroute] = this.routes[subroute] || handler
-        this.routes[subroute][type] = handler
+        this.routes[subroute][method] = handler
         return handler
     }
 

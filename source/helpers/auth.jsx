@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
-import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import colors from '../colors'
 import { OutlineButtonGreen } from '../elements/buttons.jsx'
+
+export const getToken = () =>
+    sessionStorage.getItem('authToken')
+
+export const setToken = (token) =>
+    token ? sessionStorage.setItem('authToken', token) : sessionStorage.removeItem('authToken')
+
 
 const Hero = styled.div`
     background: ${colors.font};
@@ -52,19 +58,17 @@ const Authorize = ({ changeLocation }) => {
 }
 
 @withRouter
-@connect((state) => ({authToken: state.auth.token}))
 export class Auth extends Component {
     render() {
-        const {authToken, children, history: {push}} = this.props
-        return authToken ? children : <Authorize changeLocation={push} />
+        const {children, history: {push}} = this.props
+        return getToken() ? children : <Authorize changeLocation={push} />
     }
 }
 
-@connect((state) => ({authToken: state.auth.token}))
 export class AuthRedirect extends Component {
     render() {
-        const {authToken, children, to = '/'} = this.props
-        return authToken ? <Redirect to={to} /> : children
+        const {children, to = '/'} = this.props
+        return getToken() ? <Redirect to={to} /> : children
     }
 }
 
