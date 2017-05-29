@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import { Redirect } from 'react-router-dom'
 import styled from 'styled-components'
 import colors from '../colors'
 import { OutlineButtonGreen } from '../elements/buttons.jsx'
@@ -58,5 +59,16 @@ export class Auth extends Component {
     }
 }
 
+@connect((state) => ({authToken: state.auth.token}))
+export class AuthRedirect extends Component {
+    render() {
+        const {authToken, children, to = '/'} = this.props
+        return authToken ? <Redirect to={to} /> : children
+    }
+}
+
 export const authRequired = (Component) => () =>
     <Auth><Component /></Auth>
+
+export const redirectAuthorized = (to) => (Component) => () =>
+    <AuthRedirect to={to}><Component /></AuthRedirect>

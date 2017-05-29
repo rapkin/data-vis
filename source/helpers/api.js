@@ -4,7 +4,8 @@ import { SubmissionError } from 'redux-form'
 const createHandler = (type, url) => (data) =>
     axios[type](url, data)
         .catch(err => {
-            throw new SubmissionError({_error: err.toString()})
+            const message = err.response && err.response.data.error
+            throw new SubmissionError({_error: message || err.toString()})
         })
 
 export default class Api {
