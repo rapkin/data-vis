@@ -13,8 +13,8 @@ export default class Login extends Component {
     }
 
     render() {
-        return (
-            <LoginForm onSubmit={login} onSubmitSuccess={::this.onSuccess} />
-        )
+        return <LoginForm
+            onSubmit={login}
+            onSubmitSuccess={::this.onSuccess} />
     }
 }
