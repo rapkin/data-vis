@@ -14,7 +14,9 @@ export default class Registration extends Component {
 
     render() {
         return (
-            <RegistrationForm onSubmit={registration} onSubmitSuccess={::this.onSuccess} />
+            <RegistrationForm
+                onSubmit={registration}
+                onSubmitSuccess={::this.onSuccess} />
         )
     }
 }

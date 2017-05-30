@@ -11,6 +11,9 @@ import Login from './pages/Login.jsx'
 import Logout from './pages/Logout.jsx'
 import Registration from './pages/Registration.jsx'
 
+import Leaflet from 'leaflet'
+Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images/' // fixme
+
 render((
     <Provider store={store}>
         <Router>
