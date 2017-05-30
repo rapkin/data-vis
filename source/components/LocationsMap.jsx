@@ -8,10 +8,10 @@ import colors from '../colors.js'
 const buildMarker = (color = 'green') =>
     `<div
         style="
-            margin-top: -10px;
-            margin-left: -10px;
-            width: 20px;
-            height: 20px;
+            margin-top: -15px;
+            margin-left: -15px;
+            width: 30px;
+            height: 30px;
             background: ${colors[color]};
             border: 1px solid white;
             border-radius: 50%;
@@ -20,7 +20,7 @@ const buildMarker = (color = 'green') =>
 
 const markerIcon = Leaflet.divIcon({
     iconSize: null,
-    html: buildMarker('red')
+    html: buildMarker('green')
 })
 
 const Wrapper = styled.div`

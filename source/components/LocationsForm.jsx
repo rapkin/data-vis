@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { connect } from 'react-redux'
 import { SendButton } from '../elements/buttons.jsx'
 import colors from '../colors.js'
 import Locations from '../components/Locations.jsx'
@@ -13,13 +12,13 @@ const Wrapper = styled.div`
 `
 
 const LocationsWrapper = styled.div`
-    width: 30%;
+    width: 400px;
     padding: 10px;
     overflow: auto;
 `
 
 const LocationsMapWrapper = styled.div`
-    width: 70%;
+    width: calc(100% - 400px);
 `
 
 const ButtonsWrapper = styled.div`
@@ -27,7 +26,7 @@ const ButtonsWrapper = styled.div`
     height: 50px;
     bottom: 0;
     right: 0;
-    width: 70%;
+    width: calc(100% - 400px);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -44,10 +43,10 @@ const CounterEl = styled.span`
 const Counter = ({color, title, value}) =>
     value ? <CounterEl color={color}>{title}: <b>{value}</b></CounterEl> : null
 
-@connect(() => ({locations: [{id: 1, name: '', lat: 48.8, lon: 31.2}]}))
 export default class Home extends React.Component {
     constructor(props) {
         super(props)
+        this.removed = []
         this.state = {
             focused: null,
             locations: this.props.locations
@@ -66,6 +65,7 @@ export default class Home extends React.Component {
     }
 
     removeLocation(location) {
+        if (location.id) this.removed.push(location)
         this.setState({locations: this.state.locations.filter(l => l != location)})
     }
 
@@ -75,13 +75,21 @@ export default class Home extends React.Component {
         this.setFocus(newItem)
     }
 
-    render() {
-        const { focused, locations } = this.state
-        // const { locations } = this.props
+    getChangedItems() {
+        const { locations } = this.state
         const added = locations.filter(l => !l.id)
         const changed = locations.filter(l => l.id && this.props.locations.indexOf(l) == -1)
-        const removed = Math.abs(locations.length - this.props.locations.length - added.length)
-        const canSave = added.length > 0 || changed.length > 0 || removed > 0
+        return {added, changed, removed: this.removed}
+    }
+
+    saveChanges() {
+        this.props.handleSave(this.getChangedItems())
+    }
+
+    render() {
+        const { focused, locations } = this.state
+        const { added, changed, removed } = this.getChangedItems()
+        const canSave = added.length > 0 || changed.length > 0 || removed.length > 0
 
         return <Wrapper>
             <LocationsWrapper>
@@ -104,12 +112,12 @@ export default class Home extends React.Component {
             {canSave && (
                 <ButtonsWrapper>
                     <div>
-                        <Counter color='red' title='Removed' value={removed} />
+                        <Counter color='red' title='Removed' value={removed.length} />
                         <Counter color='green' title='Added' value={added.length} />
                         <Counter color='yellow' title='Changed' value={changed.length} />
                     </div>
 
-                    <SendButton>Save changes</SendButton>
+                    <SendButton onClick={::this.saveChanges}>Save changes</SendButton>
                 </ButtonsWrapper>
             )}
         </Wrapper>
