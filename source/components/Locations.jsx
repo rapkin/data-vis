@@ -23,13 +23,18 @@ const NavigateIcon = styled(Icon)`
 
 // add scroll to this component (scroll to focused element)
 export default class Locations extends React.Component {
+    componentDidUpdate() {
+        const index = this.props.locations.indexOf(this.props.focused)
+        if (index > -1) this.refs[`el${index}`].parentElement.scrollIntoView()
+    }
+
     render() {
         const {locations, focused, onNavigateTo, onChange, onRemove} = this.props
         return <div>
             <p>Click on map to add new location</p>
             {locations.map((location, i) => (
                 <Item key={i} active={focused == location}>
-                    <span>
+                    <span ref={`el${i}`}>
                         <i>Lat</i>: {location.lat.toFixed(3)},
                         <i> Lon</i>: {location.lon.toFixed(3)}
                         <NavigateIcon

@@ -48,15 +48,22 @@ export default class Home extends React.Component {
         super(props)
         this.removed = []
         this.state = {
-            focused: null,
+            focusedOnMap: null,
+            focusedOnForm: null,
             locations: this.props.locations
         }
     }
 
-    setFocus(marker) {
-        this.setState({focused: marker})
-        clearTimeout(this.focusTimeout)
-        this.focusTimeout = setTimeout(() => this.setState({focused: null}), 1000)
+    setMapFocus(marker) {
+        this.setState({focusedOnMap: marker})
+        clearTimeout(this.focusMapTimeout)
+        this.focusMapTimeout = setTimeout(() => this.setState({focusedOnMap: null}), 1000)
+    }
+
+    setFormFocus(marker) {
+        this.setState({focusedOnForm: marker})
+        clearTimeout(this.focusFormTimeout)
+        this.focusFormTimeout = setTimeout(() => this.setState({focusedOnForm: null}), 1000)
     }
 
     changeLocation(oldItem, newFields) {
@@ -72,7 +79,7 @@ export default class Home extends React.Component {
     addLocation({latlng: {lat, lng}}) {
         const newItem = {name: '', lat, lon: lng}
         this.setState({locations: [...this.state.locations, newItem]})
-        this.setFocus(newItem)
+        this.setFormFocus(newItem)
     }
 
     getChangedItems() {
@@ -87,15 +94,15 @@ export default class Home extends React.Component {
     }
 
     render() {
-        const { focused, locations } = this.state
+        const { focusedOnForm, focusedOnMap, locations } = this.state
         const { added, changed, removed } = this.getChangedItems()
         const canSave = added.length > 0 || changed.length > 0 || removed.length > 0
 
         return <Wrapper>
             <LocationsWrapper>
                 <Locations
-                    onNavigateTo={::this.setFocus}
-                    focused={focused}
+                    onNavigateTo={::this.setMapFocus}
+                    focused={focusedOnForm}
                     onChange={::this.changeLocation}
                     onRemove={::this.removeLocation}
                     locations={locations} />
@@ -103,9 +110,9 @@ export default class Home extends React.Component {
 
             <LocationsMapWrapper>
                 <LocationsMap
-                    focused={focused}
+                    focused={focusedOnMap}
                     onMapClick={::this.addLocation}
-                    onLocationClick={::this.setFocus}
+                    onLocationClick={::this.setFormFocus}
                     locations={locations} />
             </LocationsMapWrapper>
 
