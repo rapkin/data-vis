@@ -2,13 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import Leaflet from 'leaflet'
 import { connect } from 'react-redux'
-import { Map, Marker, Popup, Tooltip, TileLayer } from 'react-leaflet'
+import { Map, Marker, Tooltip, TileLayer } from 'react-leaflet'
 import { Map as config } from '../../config.json'
 import { authRequired } from '../helpers/auth.jsx'
 import { RawStyledInput } from '../elements/forms.jsx'
 import colors from '../colors.js'
 import { Icon } from '../elements/icons.jsx'
-import { RemoveButton, ButtonRed } from '../elements/buttons.jsx'
+import { RemoveButton } from '../elements/buttons.jsx'
 
 Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images/' // fixme
 
@@ -52,20 +52,6 @@ const Item = styled.div`
     background: ${props => props.active ? '#a8d2aa': 'white'};
 `
 
-const PopupForm = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-
-    > div {
-        margin-top: 0;
-    }
-
-    button {
-        margin-left: 10px;
-    }
-`
-
 const NavigateIcon = styled(Icon)`
     color: #333;
     font-size: 18px;
@@ -79,7 +65,7 @@ const NavigateIcon = styled(Icon)`
 export default class Home extends React.Component {
     constructor(props) {
         super(props)
-        this.popups = []
+        this.markers = []
         this.state = {
             markers: [],
             focused: null
@@ -102,23 +88,14 @@ export default class Home extends React.Component {
     }
 
     navigateTo(marker) {
-        const index = this.state.markers.findIndex(m => m == marker)
-        const popup = this.popups[index]
         const {lat, lng} = marker
         this.map.leafletElement.panTo({lat, lng})
-
-        popup.leafletElement.openOn(this.map.leafletElement)
     }
 
-    componentDidMount() {
-        this.map.leafletElement.on('popupopen', (e) => {
-            const index = this.popups.findIndex(p => p.leafletElement == e.popup)
-            this.setState({focused: index})
-        })
-
-        this.map.leafletElement.on('popupclose', () => {
-            this.setState({focused: null})
-        })
+    setFocus(index) {
+        this.setState({focused: index})
+        // scroll to focused element
+        setTimeout(() => this.setState({focused: null}), 1000)
     }
 
     render() {
@@ -154,21 +131,11 @@ export default class Home extends React.Component {
                     <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' />
                     {markers.map((marker, i) => (
                         <Marker
+                            ref={m => this.markers[i] = m}
                             key={i}
+                            onClick={() => this.setFocus(i)}
                             position={[marker.lat, marker.lng]}
                             icon={markerIcon} >
-                            <Popup ref={p => this.popups[i] = p}>
-                                <PopupForm>
-                                    <RawStyledInput
-                                        label='Location name'
-                                        onChange={e => this.setMarkerName(marker, e.target.value)}
-                                        value={marker.name} />
-                                    <ButtonRed
-                                        onClick={() => this.removeMarker(marker)}>
-                                        <Icon name='times-circle' />
-                                    </ButtonRed>
-                                </PopupForm>
-                            </Popup>
                             <Tooltip>
                                 <span>
                                     [{marker.lat.toFixed(3)}; {marker.lng.toFixed(3)}]
