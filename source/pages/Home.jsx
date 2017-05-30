@@ -6,10 +6,27 @@ import { Map, Marker, Popup, Tooltip, TileLayer } from 'react-leaflet'
 import { Map as config } from '../../config.json'
 import { authRequired } from '../helpers/auth.jsx'
 import { RawStyledInput } from '../elements/forms.jsx'
+import colors from '../colors.js'
 import { Icon } from '../elements/icons.jsx'
 import { RemoveButton, ButtonRed } from '../elements/buttons.jsx'
 
 Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images/' // fixme
+
+const buildMarker = (color = 'green') =>
+    `<div
+        style="
+            margin-top: -10px;
+            margin-left: -10px;
+            width: 20px;
+            height: 20px;
+            background: ${colors[color]};
+            border: 1px solid white;
+            border-radius: 50%;
+        "
+    />`
+
+const markerIcon = Leaflet.divIcon({iconSize: null, html: buildMarker('red')})
+
 
 const Wrapper = styled.div`
     height: calc(100vh - 50px);
@@ -49,11 +66,20 @@ const PopupForm = styled.div`
     }
 `
 
+const NavigateIcon = styled(Icon)`
+    color: #333;
+    font-size: 18px;
+    display: inline-block;
+    margin-left: 10px;
+    cursor: pointer;
+`
+
 @authRequired
 @connect((state) => ({authToken: state.auth.token}))
 export default class Home extends React.Component {
     constructor(props) {
         super(props)
+        this.popups = []
         this.state = {
             markers: [],
             focused: null
@@ -71,8 +97,28 @@ export default class Home extends React.Component {
         this.setState({markers: markers.map((m, i) => i == index ? newMarker : m)})
     }
 
-    removeMarker(location) {
-        this.setState({markers: this.state.markers.filter(loc => loc != location)})
+    removeMarker(marker) {
+        this.setState({markers: this.state.markers.filter(loc => loc != marker)})
+    }
+
+    navigateTo(marker) {
+        const index = this.state.markers.findIndex(m => m == marker)
+        const popup = this.popups[index]
+        const {lat, lng} = marker
+        this.map.leafletElement.panTo({lat, lng})
+
+        popup.leafletElement.openOn(this.map.leafletElement)
+    }
+
+    componentDidMount() {
+        this.map.leafletElement.on('popupopen', (e) => {
+            const index = this.popups.findIndex(p => p.leafletElement == e.popup)
+            this.setState({focused: index})
+        })
+
+        this.map.leafletElement.on('popupclose', () => {
+            this.setState({focused: null})
+        })
     }
 
     render() {
@@ -84,7 +130,10 @@ export default class Home extends React.Component {
                     <Item key={i} active={i == focused}>
                         <span>
                             <i>Lat</i>: {marker.lat.toFixed(3)},
-                            <i>Lon</i>: {marker.lng.toFixed(3)}
+                            <i> Lon</i>: {marker.lng.toFixed(3)}
+                            <NavigateIcon
+                                name='crosshairs'
+                                onClick={() => this.navigateTo(marker)} />
                         </span>
                         <RawStyledInput
                             label='Location name'
@@ -104,13 +153,14 @@ export default class Home extends React.Component {
 
                     <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' />
                     {markers.map((marker, i) => (
-                        <Marker key={i} position={[marker.lat, marker.lng]}>
-                            <Popup>
+                        <Marker
+                            key={i}
+                            position={[marker.lat, marker.lng]}
+                            icon={markerIcon} >
+                            <Popup ref={p => this.popups[i] = p}>
                                 <PopupForm>
                                     <RawStyledInput
                                         label='Location name'
-                                        onFocus={() => this.setState({focused: i})}
-                                        onBlur={() => this.setState({focused: null})}
                                         onChange={e => this.setMarkerName(marker, e.target.value)}
                                         value={marker.name} />
                                     <ButtonRed
