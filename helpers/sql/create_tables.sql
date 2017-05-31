@@ -33,7 +33,7 @@ CREATE TABLE data_entries (
     set_id integer NOT NULL,
     location_id integer NOT NULL,
     value varchar(64) NULL,
-    time int NOT NULL,
+    time float NOT NULL,
     user_id integer NOT NULL,
     FOREIGN KEY (set_id) REFERENCES data_sets(id) ON DELETE CASCADE,
     FOREIGN KEY (location_id) REFERENCES locations(id) ON DELETE CASCADE,

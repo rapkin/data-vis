@@ -43,8 +43,9 @@ def insert(table, user_id, data, fields):
     data["user_id"] = user_id
 
     val_list = ["'"+str(data[key])+"'" for key in fields]
-    value_str = "("+', '.join(val_list)+")"
-    insert_query += " ("+', '.join(fields)+") VALUES " + value_str
+    heh = "(" + "(SELECT MAX(id) from "+table+")+1, "
+    value_str = heh+', '.join(val_list)+")"
+    insert_query += " (id, "+', '.join(fields)+") VALUES " + value_str
 
     return insert_query
 
