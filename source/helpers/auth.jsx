@@ -1,44 +1,14 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router'
 import { Redirect } from 'react-router-dom'
-import styled from 'styled-components'
-import colors from '../colors'
 import { OutlineButtonGreen } from '../elements/buttons.jsx'
+import { Hero } from '../elements/common.jsx'
 
 export const getToken = () =>
     sessionStorage.getItem('authToken')
 
 export const setToken = (token) =>
     token ? sessionStorage.setItem('authToken', token) : sessionStorage.removeItem('authToken')
-
-
-const Hero = styled.div`
-    background: ${colors.font};
-    color: ${colors.background};
-    padding: 20px;
-    height: calc(100vh - 50px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-
-    h1, h2 {
-        font-weight: 100;
-    }
-
-    h1 {
-        font-size: 73px;
-        margin: 0;
-    }
-
-    h2 {
-        font-size: 30px;
-    }
-
-    button {
-        margin: 0 20px;
-    }
-`
 
 const Authorize = ({ changeLocation }) => {
     const signIn = () => changeLocation('/login')

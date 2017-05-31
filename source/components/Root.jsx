@@ -23,6 +23,11 @@ const menu = {
         name: 'Home',
         icon: 'home'
     },
+    locations: {
+        link: '/locations/',
+        name: 'Locations',
+        icon: 'map-marker'
+    },
     login: {
         link: '/login/',
         name: 'Sign in',
@@ -51,7 +56,7 @@ export default class Root extends Component {
             <Wrapper>
                 <TopMenu
                     logo={true}
-                    items={[menu.home]}
+                    items={[menu.home, menu.locations]}
                     rightSection={rightSection} />
                 <Page>{children}</Page>
             </Wrapper>
