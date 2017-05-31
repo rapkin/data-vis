@@ -9,12 +9,28 @@ const Wrapper = styled.div`
     height: calc(100vh - 50px);
     width: 100%;
     display: flex;
+    position: relative
 `
 
 const LocationsWrapper = styled.div`
+    position: relative;
     width: 400px;
     padding: 10px;
+    padding-top: 60px;
     overflow: auto;
+`
+
+const SearchInput = styled.input`
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid ${colors.green};
+    outline: none;
+    padding: 0 20px;
+    font-size: 18px;
 `
 
 const LocationsMapWrapper = styled.div`
@@ -48,6 +64,7 @@ export default class Home extends React.Component {
         super(props)
         this.removed = []
         this.state = {
+            search: '',
             focusedOnMap: null,
             focusedOnForm: null,
             locations: this.props.locations
@@ -94,18 +111,25 @@ export default class Home extends React.Component {
     }
 
     render() {
-        const { focusedOnForm, focusedOnMap, locations } = this.state
+        const { focusedOnForm, focusedOnMap, locations, search } = this.state
         const { added, changed, removed } = this.getChangedItems()
         const canSave = added.length > 0 || changed.length > 0 || removed.length > 0
+        const filtered = !search ? locations : locations
+            .filter(l => l.name.toLowerCase().indexOf(search.toLowerCase()) > -1)
 
         return <Wrapper>
             <LocationsWrapper>
+                <SearchInput
+                    onChange={(e) => this.setState({search: e.target.value})}
+                    placeholder='Search location'
+                    value={search} />
                 <Locations
                     onNavigateTo={::this.setMapFocus}
                     focused={focusedOnForm}
+                    search={search}
                     onChange={::this.changeLocation}
                     onRemove={::this.removeLocation}
-                    locations={locations} />
+                    locations={filtered} />
             </LocationsWrapper>
 
             <LocationsMapWrapper>
@@ -113,7 +137,7 @@ export default class Home extends React.Component {
                     focused={focusedOnMap}
                     onMapClick={::this.addLocation}
                     onLocationClick={::this.setFormFocus}
-                    locations={locations} />
+                    locations={filtered} />
             </LocationsMapWrapper>
 
             {canSave && (
