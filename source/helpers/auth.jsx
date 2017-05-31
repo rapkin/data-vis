@@ -1,40 +1,18 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import styled from 'styled-components'
-import colors from '../colors'
+import { withRouter } from 'react-router'
+import { Redirect } from 'react-router-dom'
 import { OutlineButtonGreen } from '../elements/buttons.jsx'
+import { Hero } from '../elements/common.jsx'
 
-const Hero = styled.div`
-    background: ${colors.font};
-    color: ${colors.background};
-    padding: 20px;
-    height: calc(100vh - 50px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+export const getToken = () =>
+    sessionStorage.getItem('authToken')
 
-    h1, h2 {
-        font-weight: 100;
-    }
+export const setToken = (token) =>
+    token ? sessionStorage.setItem('authToken', token) : sessionStorage.removeItem('authToken')
 
-    h1 {
-        font-size: 73px;
-    }
-
-    h2 {
-        font-size: 30px;
-    }
-
-    button {
-        margin: 0 20px;
-    }
-`
-
-const Authorize = ({ dispatch }) => {
-    const signIn = () => dispatch(push('/login'))
-    const signUp = () => dispatch(push('/registration'))
+const Authorize = ({ changeLocation }) => {
+    const signIn = () => changeLocation('/login')
+    const signUp = () => changeLocation('/registration')
 
     return (
         <Hero>
@@ -49,13 +27,23 @@ const Authorize = ({ dispatch }) => {
     )
 }
 
-@connect((state) => ({authToken: state.auth.token}))
+@withRouter
 export class Auth extends Component {
     render() {
-        const {authToken, children, dispatch} = this.props
-        return authToken ? children : <Authorize dispatch={dispatch} />
+        const {children, history: {push}} = this.props
+        return getToken() ? children : <Authorize changeLocation={push} />
+    }
+}
+
+export class AuthRedirect extends Component {
+    render() {
+        const {children, to = '/'} = this.props
+        return getToken() ? <Redirect to={to} /> : children
     }
 }
 
 export const authRequired = (Component) => () =>
     <Auth><Component /></Auth>
+
+export const redirectAuthorized = (to) => (Component) => () =>
+    <AuthRedirect to={to}><Component /></AuthRedirect>

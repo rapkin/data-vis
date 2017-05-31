@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import TopMenu from './TopMenu.jsx'
 import styled from 'styled-components'
 import colors from '../colors'
@@ -22,6 +23,16 @@ const menu = {
         name: 'Home',
         icon: 'home'
     },
+    locations: {
+        link: '/locations/',
+        name: 'Locations',
+        icon: 'map-marker'
+    },
+    data: {
+        link: '/data/',
+        name: 'Data',
+        icon: 'database'
+    },
     login: {
         link: '/login/',
         name: 'Sign in',
@@ -39,18 +50,18 @@ const menu = {
     }
 }
 
-@connect((state) => ({authToken: state.auth.token, path: state.routing.location.pathname}))
+@withRouter
+@connect((state) => ({authToken: state.auth.token}))
 export default class Root extends Component {
     render() {
-        const { children, authToken, path } = this.props
+        const { children, authToken } = this.props
         const rightSection = authToken ? [menu.logout] : [menu.login, menu.registration]
 
         return (
             <Wrapper>
                 <TopMenu
                     logo={true}
-                    active={path}
-                    items={[menu.home]}
+                    items={[menu.home, menu.locations, menu.data]}
                     rightSection={rightSection} />
                 <Page>{children}</Page>
             </Wrapper>

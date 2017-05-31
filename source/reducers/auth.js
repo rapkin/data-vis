@@ -2,21 +2,22 @@ import {
     SET_AUTH_TOKEN,
     UNSET_AUTH_TOKEN
 } from '../constants'
+import { getToken, setToken } from '../helpers/auth.jsx'
 
 export const initial = {
-    token: sessionStorage.getItem('authToken') || null
+    token: getToken()
 }
 
 export default (state = initial, action) => {
     switch (action.type) {
         case SET_AUTH_TOKEN: {
             const token = action.payload
-            sessionStorage.setItem('authToken', token)
+            setToken(token)
             return {...state, token}
         }
 
         case UNSET_AUTH_TOKEN: {
-            sessionStorage.removeItem('authToken')
+            setToken()
             return {...state, token: null}
         }
 

@@ -45,13 +45,16 @@ def create():
 def save(querySql):
     conn = get_db()
     cursor = conn.cursor()
+    querySql = querySql+";"
     try:
         cursor.execute(querySql)
         mes = cursor.statusmessage
     except Exception as e:
         print(e)
-        print("\n\n"+cursor.statusmessage)
+        print(querySql)
+        print(""+cursor.statusmessage)
         cursor.close()
+        conn.commit()
         raise BadRequest("Iternal db save error")
     cursor.close()
     conn.commit()
@@ -65,6 +68,7 @@ def query(querySql):
         cursor.execute(querySql)
     except Exception as e:
         print(e)
+        print(querySql)
         print("\n\n"+cursor.statusmessage)
         cursor.close()
         raise BadRequest("Iternal db error")

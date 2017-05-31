@@ -1,33 +1,92 @@
 import React from 'react'
 import styled from 'styled-components'
-import Leaflet from 'leaflet'
-import { Map, Marker, Tooltip, TileLayer, Rectangle } from 'react-leaflet'
-import { Map as config } from '../../config.json'
+import colors from '../colors.js'
 import { authRequired } from '../helpers/auth.jsx'
+import { get as getDataSets } from '../api/dataSets'
+import { get as getDataEntries } from '../api/dataEntries'
+import { get as getLocations } from '../api/locations'
+import { Loading } from '../elements/common.jsx'
+import {
+    MapWrapper,
+    FullWrapper,
+    ButtonsWrapper,
+    Counter
+} from '../elements/common.jsx'
+import DataMap from '../components/DataMap.jsx'
+import { OutlineButtonGreen } from '../elements/buttons.jsx'
 
-Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.3/images/' // fixme
-const [cx, cy] = config.center
+const DataSetsWrapper = styled(ButtonsWrapper)`
+    background: rgba(255, 255, 255, 0.8);
+    justify-content: flex-start;
+`
 
-const MapWrapper = styled.div`
-    height: calc(100vh - 50px);
+const DataSetButton = styled(OutlineButtonGreen)`
+    font-size: 16px;
+    text-transform: none;
+    margin: 0 5px;
+    ${props => props.active && `
+        background: ${colors.green};
+        color: white;
+    `}
 `
 
 @authRequired
-export default class Home extends React.Component {
-    render() {
-        return (
-            <MapWrapper>
-                <Map center={config.center} zoom={config.zoom} >
-                    <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' />
-                    <Marker position={config.center}>
-                        <Tooltip>
-                            <span>test</span>
-                        </Tooltip>
-                    </Marker>
+export default class DataPage extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            loading: true,
+            dataSets: [],
+            locations: [],
+            dataEntries: [],
+            selected: null
+        }
+    }
 
-                    <Rectangle bounds={[[cx, cy], [cx+2, cy+2]]} />
-                </Map>
+    componentWillMount() {
+        this.loadData()
+    }
+
+    loadData() {
+        const getSetsP = getDataSets().then(res => this.setState({dataSets: res.data.list}))
+        const getLocsP = getLocations().then(res => this.setState({locations: res.data.list}))
+        const getValuesP = getDataEntries().then(res => this.setState({dataEntries: res.data.list}))
+        Promise.all([getSetsP, getLocsP, getValuesP]).then(() => this.setState({loading: false}))
+    }
+
+    getDataItems() {
+        const { dataEntries, locations, selected } = this.state
+        if (!selected) return []
+        const locs = {}
+        locations.forEach(l => locs[l.id] = l)
+        return dataEntries
+            .filter(v => v.set_id == selected.id )
+            .map(v => ({
+                ...v,
+                location: locs[v.location_id],
+            }))
+    }
+
+    render() {
+        const { loading, dataSets, selected } = this.state
+
+        if (loading) return <Loading />
+        return <FullWrapper>
+            <MapWrapper>
+                <DataMap items={this.getDataItems()} />
+
+                <DataSetsWrapper>
+                    <Counter color='green' title='Select' value=' ' />
+                    {dataSets.map(set =>
+                        <DataSetButton
+                            onClick={() => this.setState({selected: set})}
+                            active={selected == set}
+                            key={set.id}>
+                            {set.name}
+                        </DataSetButton>
+                    )}
+                </DataSetsWrapper>
             </MapWrapper>
-        )
+        </FullWrapper>
     }
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Icon } from './icons.jsx'
 import colors from '../colors'
 
 export const Button = styled.button`
@@ -17,6 +18,18 @@ export const Button = styled.button`
         opacity: 0.7;
         background: ${colors.grey};
         cursor: not-allowed;
+    }
+
+    &:hover {
+        background: ${colors.greyDarken};
+    }
+`
+
+export const ButtonRed = styled(Button)`
+    background: ${colors.red};
+
+    &:hover {
+        background: ${colors.redDarken};
     }
 `
 
@@ -49,3 +62,41 @@ export const SendButton = styled(Button)`
         background: ${colors.greenDarken};
     }
 `
+
+const RemoveButtonWrapper = styled.div`
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background: ${colors.red};
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+        background: ${colors.redDarken};
+    }
+`
+
+const ClearButtonWrapper = styled(RemoveButtonWrapper)`
+    background: ${colors.yellow};
+    &:hover {
+        background: ${colors.yellowDarken};
+    }
+`
+
+export const RemoveButton = (props) =>
+    <RemoveButtonWrapper {...props}>
+        <Icon name='times' />
+    </RemoveButtonWrapper>
+
+export const ClearButton = (props) =>
+    <ClearButtonWrapper {...props}>
+        <Icon name='minus-circle' />
+    </ClearButtonWrapper>

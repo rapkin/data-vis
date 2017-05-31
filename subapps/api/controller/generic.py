@@ -4,7 +4,6 @@ from helpers.auth import check_token
 
 
 class GenericControler(MethodView):
-
     def get(self):
         try:
             args = request.args.get('id').replace('[', '').replace(']', '')
@@ -22,34 +21,13 @@ class GenericControler(MethodView):
         return jsonify({"list": values})
 
     def post(self):
-        """Old
-        [
-        {
-            "filter_name": "id",
-            "filter_value": "2",
-            "values":{
-                "name": "check2"
-            }
-        }
-        ]
-        New
-                {
-            "id": 1,
-            <"field">: <"value">,
-            ...
-        }
-        """
         json = request.get_json()
         user_id = check_token()
 
         status = self.model.update_by_id(json, user_id)
         return jsonify({"message": status})
-
     
     def delete(self):
-        """
-        {"ids": [1,2,3,4,5]}
-        """
         json = request.get_json()
         user_id = check_token()
 
@@ -58,17 +36,7 @@ class GenericControler(MethodView):
         status = self.model.delete_by_id(ids, user_id)
         return jsonify({"message": status})
         
-    
     def put(self):
-        """
-        
-            {
-                "lat": 123.54,
-                "lon": 31.42,
-                "name": "some point",
-            },
-        
-        """
         json = request.get_json()
         user_id = check_token()
 

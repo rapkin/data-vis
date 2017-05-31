@@ -11,6 +11,7 @@ const Menu = styled.div`
     background: #0099cc;
     justify-content: space-between;
     box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    z-index: 2000;
 
     > div {
         display: flex;
@@ -27,7 +28,7 @@ const menuItem = css`
 
     .fa {
         font-size: 20px;
-        margin-right: 5px;
+        margin-right: 10px;
     }
 
     span {

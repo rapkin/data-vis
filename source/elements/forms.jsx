@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'styled-components'
 import colors from '../colors'
 
@@ -63,6 +63,7 @@ export const InputError = styled.span`
 
 export const Input = styled.input`
     width: 100%;
+    min-width: 200px;
     background: transparent;
     font-size: 18px;
     outline: none;
@@ -71,13 +72,45 @@ export const Input = styled.input`
     padding: 10px 15px;
 `
 
-export const StyledInput = ({input, label, type, meta: {touched, error, active}}) => {
+export const StyledInput = ({ input, type, label, meta: { touched, error, active } }) => {
     const hasError = touched && error
-    return (
-        <InputWrapper>
-            <InputLabel active={active} error={hasError}>{label}</InputLabel>
-            <Input active={active} error={hasError} {...input} placeholder={label} type={type} />
-            {hasError && <InputError>{error}</InputError>}
-        </InputWrapper>
-    )
+    return <InputWrapper>
+        <InputLabel active={active} error={hasError}>{label}</InputLabel>
+        <Input active={active} error={hasError} {...input} type={type} placeholder={label} />
+        {hasError && <InputError>{error}</InputError>}
+    </InputWrapper>
+}
+
+export class RawStyledInput extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            touched: false,
+            active: false
+        }
+    }
+
+    onFocus(event) {
+        this.setState({active: true, touched: true})
+        this.props.onFocus && this.props.onFocus(event)
+    }
+
+    onBlur(event) {
+        this.setState({active: false})
+        this.props.onBlur && this.props.onBlur(event)
+    }
+
+    render() {
+        const onFocus = (e) => this.onFocus(e)
+        const onBlur = (e) => this.onBlur(e)
+
+        const { type, label } = this.props
+        const input = {...this.props, onFocus, onBlur}
+
+        return <StyledInput
+            input={input}
+            type={type}
+            label={label}
+            meta={this.state} />
+    }
 }

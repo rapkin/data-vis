@@ -1,11 +1,15 @@
 import axios from 'axios'
 import { SubmissionError } from 'redux-form'
+import { getToken } from './auth.jsx'
 
-const createHandler = (type, url) => (data) =>
-    axios[type](url, data)
+const createHandler = (method, url) => (data) => {
+    const httpMethod = method == 'del' ? 'delete' : method
+    return axios({method: httpMethod, url, data, headers: {Authorization: getToken()}})
         .catch(err => {
-            throw new SubmissionError({_error: err.toString()})
+            const message = err.response && err.response.data.error
+            throw new SubmissionError({_error: message || err.toString()})
         })
+}
 
 export default class Api {
     constructor(root, version = 'api') {
@@ -14,15 +18,17 @@ export default class Api {
         this.routes = {}
     }
 
-    _registerHandler(type, subroute) {
+    _registerHandler(method, subroute) {
         const segments = []
         if (this.version) segments.push(this.version)
         if (this.root) segments.push(this.root)
         if (subroute) segments.push(subroute)
 
-        const handler = createHandler('post', `/${segments.join('/')}/`)
-        this.routes[subroute] = this.routes[subroute] || handler
-        this.routes[subroute][type] = handler
+        const handler = createHandler(method, `/${segments.join('/')}/`)
+        if (subroute) {
+            this.routes[subroute] = this.routes[subroute] || handler
+            this.routes[subroute][method] = handler
+        } else this.routes[method] = handler
         return handler
     }
 
@@ -36,6 +42,10 @@ export default class Api {
 
     put(subroute) {
         return this._registerHandler('put', subroute)
+    }
+
+    del(subroute) {
+        return this._registerHandler('del', subroute)
     }
 
     expose(exportsObj) {
