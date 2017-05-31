@@ -12,7 +12,7 @@ const getMaxField = (items, name) => {
     return max
 }
 
-export default ({items}) => {
+export default ({items, name}) => {
     const maxValue = getMaxField(items, 'value')
     return <Map center={config.center} zoom={config.zoom}>
         <TileLayer url='http://{s}.tile.osm.org/{z}/{x}/{y}.png' />
@@ -25,7 +25,8 @@ export default ({items}) => {
                 <Tooltip>
                     <span>
                         [{location.lat.toFixed(3)}; {location.lon.toFixed(3)}]
-                        <b> {location.name} </b>
+                        <b> {location.name} </b><br/>
+                        {name}: <b>{value}</b>
                     </span>
                 </Tooltip>
             </Rectangle>

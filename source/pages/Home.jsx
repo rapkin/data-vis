@@ -73,7 +73,7 @@ export default class DataPage extends React.Component {
         if (loading) return <Loading />
         return <FullWrapper>
             <MapWrapper>
-                <DataMap items={this.getDataItems()} />
+                <DataMap items={this.getDataItems()} name={selected && selected.name} />
 
                 <DataSetsWrapper>
                     <Counter color='green' title='Select' value=' ' />
