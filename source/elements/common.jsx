@@ -3,6 +3,48 @@ import styled from 'styled-components'
 import colors from '../colors'
 import { Icon } from './icons.jsx'
 
+export const FullWrapper = styled.div`
+    height: calc(100vh - 50px);
+    width: 100%;
+    display: flex;
+    position: relative
+`
+
+export const SideWrapper = styled.div`
+    position: relative;
+    width: 400px;
+    padding: 10px;
+    overflow: auto;
+`
+
+export const SearchInput = styled.input`
+    height: 50px;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid ${colors.green};
+    outline: none;
+    padding: 0 20px;
+    font-size: 18px;
+`
+
+export const MapWrapper = styled.div`
+    width: calc(100% - 400px);
+`
+
+export const ButtonsWrapper = styled.div`
+    position: absolute;
+    height: 50px;
+    bottom: 0;
+    right: 0;
+    width: calc(100% - 400px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    background: white;
+    z-index: 1000;
+`
+
 export const Hero = styled.div`
     background: ${colors.font};
     color: ${colors.background};

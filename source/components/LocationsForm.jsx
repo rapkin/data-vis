@@ -4,52 +4,13 @@ import { SendButton } from '../elements/buttons.jsx'
 import colors from '../colors.js'
 import Locations from '../components/Locations.jsx'
 import LocationsMap from '../components/LocationsMap.jsx'
-
-const Wrapper = styled.div`
-    height: calc(100vh - 50px);
-    width: 100%;
-    display: flex;
-    position: relative
-`
-
-const LocationsWrapper = styled.div`
-    position: relative;
-    width: 400px;
-    padding: 10px;
-    padding-top: 60px;
-    overflow: auto;
-`
-
-const SearchInput = styled.input`
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 50px;
-    width: 100%;
-    border: none;
-    border-bottom: 2px solid ${colors.green};
-    outline: none;
-    padding: 0 20px;
-    font-size: 18px;
-`
-
-const LocationsMapWrapper = styled.div`
-    width: calc(100% - 400px);
-`
-
-const ButtonsWrapper = styled.div`
-    position: absolute;
-    height: 50px;
-    bottom: 0;
-    right: 0;
-    width: calc(100% - 400px);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-    background: white;
-    z-index: 1000;
-`
+import {
+    FullWrapper,
+    MapWrapper,
+    SideWrapper,
+    SearchInput,
+    ButtonsWrapper
+} from '../elements/common.jsx'
 
 const CounterEl = styled.span`
     padding: 0 10px;
@@ -117,8 +78,8 @@ export default class Home extends React.Component {
         const filtered = !search ? locations : locations
             .filter(l => l.name.toLowerCase().indexOf(search.toLowerCase()) > -1)
 
-        return <Wrapper>
-            <LocationsWrapper>
+        return <FullWrapper>
+            <SideWrapper>
                 <SearchInput
                     onChange={(e) => this.setState({search: e.target.value})}
                     placeholder='Search location'
@@ -130,15 +91,15 @@ export default class Home extends React.Component {
                     onChange={::this.changeLocation}
                     onRemove={::this.removeLocation}
                     locations={filtered} />
-            </LocationsWrapper>
+            </SideWrapper>
 
-            <LocationsMapWrapper>
+            <MapWrapper>
                 <LocationsMap
                     focused={focusedOnMap}
                     onMapClick={::this.addLocation}
                     onLocationClick={::this.setFormFocus}
                     locations={filtered} />
-            </LocationsMapWrapper>
+            </MapWrapper>
 
             {canSave && (
                 <ButtonsWrapper>
@@ -151,6 +112,6 @@ export default class Home extends React.Component {
                     <SendButton onClick={::this.saveChanges}>Save changes</SendButton>
                 </ButtonsWrapper>
             )}
-        </Wrapper>
+        </FullWrapper>
     }
 }

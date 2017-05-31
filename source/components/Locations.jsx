@@ -21,7 +21,11 @@ const NavigateIcon = styled(Icon)`
     cursor: pointer;
 `
 
-// add scroll to this component (scroll to focused element)
+const Tip = styled.p`
+    text-align: center;
+    color: #777;
+`
+
 export default class Locations extends React.Component {
     componentDidUpdate() {
         const index = this.props.locations.indexOf(this.props.focused)
@@ -31,7 +35,7 @@ export default class Locations extends React.Component {
     render() {
         const {locations, focused, onNavigateTo, onChange, onRemove} = this.props
         return <div>
-            <p>Click on map to add new location</p>
+            <Tip>Click on map to add new location</Tip>
             {locations.map((location, i) => (
                 <Item key={i} active={focused == location}>
                     <span ref={`el${i}`}>
