@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import Leaflet from 'leaflet'
 import { Map, Marker, Tooltip, TileLayer } from 'react-leaflet'
 import { Map as config } from '../../config.json'
@@ -23,11 +22,6 @@ const markerIcon = Leaflet.divIcon({
     html: buildMarker('green')
 })
 
-const Wrapper = styled.div`
-    height: calc(100vh - 50px);
-    Width: 100%;
-`
-
 export default class Home extends React.Component {
     navigateTo(marker) {
         const {lat, lon} = marker
@@ -40,8 +34,7 @@ export default class Home extends React.Component {
 
     render() {
         const {locations, onLocationClick, onMapClick} = this.props
-        return <Wrapper>
-            <Map
+        return <Map
                 ref={m => this.map = m}
                 center={config.center}
                 zoom={config.zoom}
@@ -63,6 +56,5 @@ export default class Home extends React.Component {
                     </Marker>
                 ))}
             </Map>
-        </Wrapper>
     }
 }

@@ -228,8 +228,10 @@ export default class DataPage extends React.Component {
 
                 {canSave && (
                     <ButtonsWrapper>
-                        <Counter color='green' title='Added' value={added.length} />
-                        <Counter color='yellow' title='Changed' value={changed.length} />
+                        <div>
+                            <Counter color='green' title='Added' value={added.length} />
+                            <Counter color='yellow' title='Changed' value={changed.length} />
+                        </div>
                         <SendButton onClick={::this.saveChanges}>Save changes</SendButton>
                     </ButtonsWrapper>
                 )}
