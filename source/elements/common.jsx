@@ -12,11 +12,26 @@ export const FullWrapper = styled.div`
 
 export const SideWrapper = styled.div`
     position: relative;
-    width: 400px;
+    flex-shrink: 0;
+    width: 300px;
     padding: 10px;
     overflow: auto;
     z-index: 1000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    box-shadow: 5px 0 5px -5px rgba(0, 0, 0, .3);
+`
+
+export const Item = styled.div`
+    position: relative;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%;
+    padding: 20px 10px;
+    background: ${props => props.active ? '#a8d2aa': 'white'};
+`
+
+export const Tip = styled.p`
+    text-align: center;
+    color: #777;
 `
 
 export const SearchInput = styled.input`
@@ -30,7 +45,8 @@ export const SearchInput = styled.input`
 `
 
 export const MapWrapper = styled.div`
-    width: calc(100% - 400px);
+    position: relative;
+    width: 100%;
 `
 
 export const ButtonsWrapper = styled.div`
@@ -38,7 +54,7 @@ export const ButtonsWrapper = styled.div`
     height: 50px;
     bottom: 0;
     right: 0;
-    width: calc(100% - 400px);
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -75,6 +91,14 @@ export const Hero = styled.div`
         margin: 0 20px;
     }
 `
+
+const CounterEl = styled.span`
+    padding: 0 10px;
+    color: ${props => colors[props.color]};
+`
+
+export const Counter = ({color, title, value}) =>
+    value ? <CounterEl color={color}>{title}: <b>{value}</b></CounterEl> : null
 
 const LoadingWrapper = styled.div`
     font-size: 24px;

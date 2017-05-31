@@ -1,7 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
 import { SendButton } from '../elements/buttons.jsx'
-import colors from '../colors.js'
 import Locations from '../components/Locations.jsx'
 import LocationsMap from '../components/LocationsMap.jsx'
 import {
@@ -9,16 +7,9 @@ import {
     MapWrapper,
     SideWrapper,
     SearchInput,
-    ButtonsWrapper
+    ButtonsWrapper,
+    Counter
 } from '../elements/common.jsx'
-
-const CounterEl = styled.span`
-    padding: 0 10px;
-    color: ${props => colors[props.color]};
-`
-
-const Counter = ({color, title, value}) =>
-    value ? <CounterEl color={color}>{title}: <b>{value}</b></CounterEl> : null
 
 export default class Home extends React.Component {
     constructor(props) {
@@ -99,19 +90,19 @@ export default class Home extends React.Component {
                     onMapClick={::this.addLocation}
                     onLocationClick={::this.setFormFocus}
                     locations={filtered} />
+
+                {canSave && (
+                    <ButtonsWrapper>
+                        <div>
+                            <Counter color='red' title='Removed' value={removed.length} />
+                            <Counter color='green' title='Added' value={added.length} />
+                            <Counter color='yellow' title='Changed' value={changed.length} />
+                        </div>
+
+                        <SendButton onClick={::this.saveChanges}>Save changes</SendButton>
+                    </ButtonsWrapper>
+                )}
             </MapWrapper>
-
-            {canSave && (
-                <ButtonsWrapper>
-                    <div>
-                        <Counter color='red' title='Removed' value={removed.length} />
-                        <Counter color='green' title='Added' value={added.length} />
-                        <Counter color='yellow' title='Changed' value={changed.length} />
-                    </div>
-
-                    <SendButton onClick={::this.saveChanges}>Save changes</SendButton>
-                </ButtonsWrapper>
-            )}
         </FullWrapper>
     }
 }

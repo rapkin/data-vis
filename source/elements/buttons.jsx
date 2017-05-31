@@ -84,7 +84,19 @@ const RemoveButtonWrapper = styled.div`
     }
 `
 
+const ClearButtonWrapper = styled(RemoveButtonWrapper)`
+    background: ${colors.yellow};
+    &:hover {
+        background: ${colors.yellowDarken};
+    }
+`
+
 export const RemoveButton = (props) =>
     <RemoveButtonWrapper {...props}>
         <Icon name='times' />
     </RemoveButtonWrapper>
+
+export const ClearButton = (props) =>
+    <ClearButtonWrapper {...props}>
+        <Icon name='minus-circle' />
+    </ClearButtonWrapper>

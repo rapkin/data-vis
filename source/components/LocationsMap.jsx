@@ -51,7 +51,7 @@ export default class Home extends React.Component {
                 {locations.map((location, i) => (
                     <Marker
                         key={i}
-                        onClick={() => onLocationClick(location)}
+                        onClick={() => onLocationClick && onLocationClick(location)}
                         position={[location.lat, location.lon]}
                         icon={markerIcon} >
                         <Tooltip>
