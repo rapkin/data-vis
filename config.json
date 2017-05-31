@@ -4,7 +4,7 @@
         "PORT": 3333,
         "SECRET": "heh",
         "ENCRYPT_ALGO": "HS384",
-        "token_life": "00:25:02"
+        "token_life": "23:25:02"
     },
     "Database": {
         "database": "data-vis",

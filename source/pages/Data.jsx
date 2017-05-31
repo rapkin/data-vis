@@ -79,7 +79,11 @@ export default class DataPage extends React.Component {
     }
 
     remove(dataSet) {
-        this.setState({active: null, items: this.state.items.filter(d => d != dataSet)})
+        this.setState({
+            active: null,
+            dataValues: this.state.dataValues.filter(v => v.set_id != dataSet.id),
+            items: this.state.items.filter(d => d != dataSet)
+        })
         removeDataSet({ids: [dataSet.id]})
     }
 
