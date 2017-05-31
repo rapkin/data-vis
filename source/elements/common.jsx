@@ -15,6 +15,8 @@ export const SideWrapper = styled.div`
     width: 400px;
     padding: 10px;
     overflow: auto;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
 `
 
 export const SearchInput = styled.input`
@@ -42,7 +44,8 @@ export const ButtonsWrapper = styled.div`
     justify-content: space-between;
     padding: 0 10px;
     background: white;
-    z-index: 1000;
+    z-index: 900;
+    box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, .3);
 `
 
 export const Hero = styled.div`
