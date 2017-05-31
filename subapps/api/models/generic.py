@@ -19,13 +19,6 @@ class GenericModel():
         return res.fetchall()
 
     def update_by_id(self, data, user_id):
-        """{
-            "id": 1,
-            <"field">: <"value">,
-            ...
-        }
-        """
-
         update_query = sql.update(
             self.table,
             str(user_id),
@@ -35,10 +28,6 @@ class GenericModel():
         return mes
 
     def delete_by_id(self, ids, user_id):
-        """
-            {"ids": [1,2,3,4,5]}
-        """
-
         delete_query = sql.delete(
             self.table,
             str(user_id),
